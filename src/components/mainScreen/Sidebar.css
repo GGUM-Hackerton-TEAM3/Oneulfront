@@ -1,0 +1,71 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -200px; 
+    width: 200px;
+    height: 100%;
+    background-color: white; 
+    transition: left 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar-1 {
+    background-color: #4C8850; 
+    width: 200px;
+    height: 73px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+.sidebar-1-btn {
+    background-color: #4C8850; 
+    color: black;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 50px;
+    text-align: center; 
+}
+
+.sidebar-2 {
+    width: 200px;
+    margin-top: 40px;
+    background-color: white; 
+  
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    width: 163px;
+    margin: 10px 19px;
+    border-bottom: 1px solid #888;
+
+}
+
+.sidebar-2 li:last-child{
+    border-bottom: none;
+}
+
+.sidebar-2-btn {
+    background-color: white; /* 버튼 배경색 */
+    color: black;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 163px;
+    text-align: center; 
+    font-family: 'Pretendard';
+
+}
+
+.sidebar button:hover {
+    background-color: gray; /* 호버 시 배경색 */
+}

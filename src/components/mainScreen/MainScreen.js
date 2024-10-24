@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './MainScreen.css';
+import Sidebar from './Sidebar';
 
-const MainScreen = () => {
-    // 목록 아이템 데이터
+
+const MainScreen = ({setCurrentScreen}) => {
     const listItems = [
         {
             id: 1,
-            image: '/bucheon.png', // 이미지 경로
+            image: '/bucheon.png', 
             title: '부천시 명상해용',
             icons: ['자기계발', '영상'], 
             description: '모여서 명상해요'
@@ -78,19 +79,26 @@ const MainScreen = () => {
 
     // 검색어 상태 정의
     const [searchQuery, setSearchQuery] = useState('');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const handleSearch = () => {
         console.log("Search initiated:", searchQuery); // 검색어 출력
         // 검색 동작 추가 가능
     };
-    const handleBack = () => {
-        window.history.back();
+   
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen); 
+    };
+
+    const closeSidebar = () => {
+        setIsSidebarOpen(false); 
     };
 
     return (
         <div className="main-screen">
             <header className="icon-bar">
-                <button className="icon-img">
+                <button className="icon-img" onClick={toggleSidebar}>
                     <img src="/menu.png" alt="메뉴" />
                 </button>
                 <button className="icon-img">
@@ -112,6 +120,8 @@ const MainScreen = () => {
                     <img src="/bell.png" alt="벨" />
                 </button>
             </header>
+
+             <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} setCurrentScreen={setCurrentScreen}/>
 
             <div className="frame">
                 <div className="icon-grid">
