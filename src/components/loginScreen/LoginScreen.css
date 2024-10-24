@@ -1,0 +1,139 @@
+.login-screen {
+    width: 393px;
+    height: 852px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    background: #F1F2F3;
+}
+
+/* 네 개의 login_tag 스타일 */
+.login-tag {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 44px;
+    padding: 10px 15px 10px 16px;
+    gap: 10px;
+    background: #FFFFFF;
+    border: 2px solid;
+    border-radius: 30px;
+    color: #9FA1A8; 
+}
+
+
+.login-screen input {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 330px; 
+    height: 44px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 1px solid #DFDFDF;
+
+}
+
+
+.login-button,
+.google-button {
+    padding: 8px 16px;
+    width: 80%; /* 버튼 너비 조정 */
+    margin-top: 10px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.login-button {
+    font-family: 'Pretendard';
+    background: #1E2024;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 330px;
+    height: 48px;
+    border-radius: 15px;
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+
+}
+
+.google-button {
+    font-family: 'Pretendard';
+    background-color: #F1F2F3;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+
+    width: 330px;
+    height: 48px;
+    border: 1.5px solid #9FA1A8;
+    border-radius: 15px;
+    flex: none;
+    order: 3;
+    flex-grow: 0;
+    cursor: pointer;
+}
+
+.google-icon{
+    width: 24px;
+    height: 24px;
+}
+
+.footer {
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;  
+    max-width: 330px;  
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #474A52;
+    flex: none;
+    order: 4;
+    flex-grow: 0;
+
+}
+.footer-link1{
+    width: 69px;
+    height: 18px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+
+}
+.footer-link2{
+    width: 69px;
+    height: 18px;
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+}
+
+
+.footer-link {
+    color: #474A52;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: none;
+}
