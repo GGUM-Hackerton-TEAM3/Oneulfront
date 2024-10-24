@@ -59,7 +59,7 @@ const CreateScreen = () => {
             {/* Second Layout */}
             <div className="layout2">
                 <div className="layout2-left">
-                    <img src="/logo.png" alt="Example" className="layout2-image" />
+                    <img src="/soccerking.png" alt="Example" className="layout2-image" />
                 </div>
                 <div className="layout2-right">
                     <h3>축구왕헤르</h3>
@@ -156,7 +156,7 @@ const CreateScreen = () => {
 
                 
                 
-                <button className="long-button">길게 된 버튼</button>
+                <button className="long-button">모임만들기</button>
             </div>
 </div>
 </div>
