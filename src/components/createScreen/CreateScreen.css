@@ -1,5 +1,6 @@
 .create-screen {
   width: 393px;
+  height: 852px;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -8,147 +9,133 @@
   position: relative;
   background: #FFFFFF;
   color: #474A52;
-  margin-top: 40px;
+  margin-top: 10px;
 }
 
 .icon-bar {
-  left: 28px;
+  left: 25px;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  width: 350px;
+  width: 393px;
   height: 40px;
-  gap: 5px;
-  margin-top: 20px;
+  gap: 9px;
+  margin-top: 56px;
   margin-bottom: 20px;
 }
 
 .icon-img {
-  width: 27px;
-  height: 27px;
+  width: 30px;
+  height: 30px;
   border: none;
   background-color: transparent;
   cursor: pointer;
 }
 
 .icon-img img {
-  width: 100%;
-  height: 100%;
+  width: max-content;
+  height: max-content;
   object-fit: contain;
 }
 
-.search-container {
+@media (max-width: 393px) {
+  .icon-img {
+    width: 60px; 
+    height: 60px; 
+  }
+  .search-button {
+    width: 60px; 
+    height: 60px; 
+  }
+}
+
+.main-search-container {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  padding: 10px 10px;
-  gap: 4px;
-  width: 200px;
-  height: 27px;
+  width: 220px;
+  height: 33px;
   border: 1px solid #D9D9D9;
   border-radius: 9999px;
+  gap: 10px;
 }
 
 .search-input {
-  width: 150px;
+  width: 147px;
   height: 16px;
-  flex: none;
+  order: 0;
   border: #F1F2F3;
 }
 
 .search-button {
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: center;
   padding: 0px;
-  width: 27px;
-  height: 27px; 
+  margin-left: 1px;
+  margin-right: 14px;
+  background: transparent;
+  width: 31px;
+  height: 31px;
+  border: none;
+  cursor: pointer;
 }
 
-.layout1{
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-padding: 8px 16px 8px 15px;
-gap: 16px;
-position: relative;
-width: 346px;
-height: 40px;
-background: #FFFFFF;
-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-border-radius: 20px;
-font-size: 10px;
-font-weight: bold;
+.search-button img {
+  width: 100%;
+  height: 100%;
 }
 
-
-.layout2{
+.layout1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px 8px 15px;
+  gap: 16px;
   position: relative;
   width: 346px;
-  background: #F9F9F9; 
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  margin-bottom: 20px;
-  margin-top: 10px;
-  display: flex;          
-  flex-direction: column; /* Stack children vertically */
-  align-items: start;    /* Center align children */
-
-}
-
-.layout2-image{
-  width: 100%;
-  height: auto;
-  max-height: 80px;
-  object-fit: cover;
+  margin: 10px;
+  height: 35px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .layout2 {
-  display: flex; 
-  flex-direction: row;
-  justify-content: center; 
-  align-items: center; 
-  width: 346px; 
-  height: 117px;
+  display: flex; /* flexbox를 사용하여 자식 요소를 수평으로 배치 */
+  flex-direction: row; /* 수평 방향으로 배치 */
+  justify-content: flex-start; 
+  align-items: center; /* 수직 중앙 정렬 */
+  width: 393px; 
+  height: 150px;
   background: #F9F9F9; 
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px; /* 패딩 추가 */
   margin-bottom: 10px; /* 하단 여백 */
 }
 
 .layout2-left {
-  width: 40%; /* 이미지 영역의 너비 */
+  width: 30%; /* 이미지 영역의 너비를 줄입니다. */
+  display: flex;
+  justify-content: left; /* 이미지 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
 }
 
 .layout2-image {
-  width: 100px; 
-  height: auto; /* 비율 유지 */
-  max-height: 80px; 
+  max-height: 80%; /* 이미지의 최대 높이를 줄입니다. */
+  width: auto; /* 자동 너비 조정 */
   object-fit: cover; 
 }
 
 .layout2-right {
-  width: 194px;
-  height: 93px;
-  padding-left: 2px; 
+  width: 50%; /* 나머지 영역 너비를 증가시킵니다. */
+  padding-left: 10px; 
   text-align: left;
-
-}
-
-.layout2-right h3 {
-  font-size: 16px; 
-  font-weight: bold; 
-  margin: 0px;
-  padding-bottom: 5px;
-}
-.layout2-right p {
-  font-size: 11px; 
-  font-weight: bold; 
-  margin: 0px;
-  padding-top: 5px;
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 배치 */
+  justify-content: center; /* 세로 중앙 정렬 */
 }
 
 
@@ -156,31 +143,39 @@ font-weight: bold;
   display: flex; /* 아이콘을 수평으로 나열 */
   gap: 10px; /* 아이콘 사이의 간격 */
 }
-.icon-grid .icon{
+
+.icon-grid .icon {
   width: auto;
   height: 35px;
   cursor: pointer;
-
-}
-.icon-grid.p{
-    font-size: 11px;
 }
 
-.layout3{
+.icon.selected {
+  background-color: #73B077;
+  color: white;
+  font-weight: bold;
+}
+
+.icon-grid.p {
+  font-size: 11px;
+}
+
+.layout3 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 8px 0 8px 20px;
   gap: 10px;
+  margin-top: 10px;
   position: relative;
   width: 346px;
   height: auto;
   background: #FFFFFF;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  
+  border-radius: 20px;  
 }
-.layout3 p{
+
+.layout3 p {
   margin: 0px;
 }
 
@@ -198,14 +193,14 @@ font-weight: bold;
   flex-direction: column;
   text-align: left;
   width: 48%;
-  height: 60px;
-  
+  height: 60px;  
 }
+
 
 .layout3-text {
   display: flex;
-  min-width: 0; /* 오버플로우 문제 방지 */
-  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  min-width: 0; 
+  white-space: nowrap; 
   font-size: 14px;
   height: 25px;
   font-weight: bold;
@@ -213,7 +208,8 @@ font-weight: bold;
   text-align: left;
   flex-direction: column; 
 }
-.layout3-image-text{
+
+.layout3-image-text {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -221,7 +217,7 @@ font-weight: bold;
 }
 
 .layout3-icons {
-  width: auto;
+  width: fit-content;
   display: flex;
 }
 
@@ -268,9 +264,11 @@ font-weight: bold;
   margin-right: 40px;
 }
 
-
-.layout3-double-set-2{
+.layout3-double-set-2 {
   margin-top: 130px;
+}
+.layout3-double-set-3 {
+  margin-top: 120px;
 }
 
 .layout3-image {
@@ -280,42 +278,73 @@ font-weight: bold;
 }
 
 .layout3-image-icon {
-  width: 80px; /* Set the width of the image */
-  height: auto; /* Maintain aspect ratio */
-  margin-right: 10px; /* Add space between the image and text */
+  width: 80px; 
+  height: auto; 
+  margin-right: 10px; 
 }
-.layout3-right{
+
+.layout3-right {
   margin: 6px 0 0 10px;
 }
-.layout3-right h{
+
+.layout3-right h {
   white-space: pre-wrap;
 }
 
-.long-button {
+.create-button {
   width: 100%;
   height: 40px;
-  background-color: #1F241E;
+  background-color: #C3C5CB;
   color: white;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   margin-bottom: 0px;
 }
+
 .scroll-container {
   max-height: 850px;
   overflow-y: auto;  
-  padding: 10px;     
 }
+
 .scrollable-list1 {
   display: flex; 
-  max-width: 293px;
+  max-width: 388px;
   overflow-y: hidden; 
   overflow-x: auto; 
   flex-direction: column; 
   gap: 8px; 
   width: 346px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   padding: 10px;
   scrollbar-width: none;
 }
+
+input[type="text"] {
+  width: 80%; 
+  height: 20px; 
+  border-radius: 12px;
+  padding: 4px; 
+  font-size: 12px; 
+  margin-bottom:5px; 
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); 
+  background: #FFFFFF;
+  border: 1px solid #C3C5CB;
+  border-radius: 12px;
+
+}
+
+.layout3 {
+  padding: 20px; 
+}
+
+.layout3-text-icons-group {
+  margin-bottom: 15px; 
+}
+
+.category-input-container {
+  width: 300px;
+  display: flex;
+  gap: 50px; 
+  margin-top: 5px;
+}
+

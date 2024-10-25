@@ -10,7 +10,6 @@
     background: #F1F2F3;
 }
 
-/* 네 개의 login_tag 스타일 */
 .login-tag {
     box-sizing: border-box;
     display: flex;
@@ -42,8 +41,7 @@
 }
 
 
-.login-button,
-.google-button {
+.login-button {
     padding: 8px 16px;
     width: 80%; /* 버튼 너비 조정 */
     margin-top: 10px;
@@ -69,31 +67,6 @@
 
 }
 
-.google-button {
-    font-family: 'Pretendard';
-    background-color: #F1F2F3;
-    color: black;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    gap: 10px;
-
-    width: 330px;
-    height: 48px;
-    border: 1.5px solid #9FA1A8;
-    border-radius: 15px;
-    flex: none;
-    order: 3;
-    flex-grow: 0;
-    cursor: pointer;
-}
-
-.google-icon{
-    width: 24px;
-    height: 24px;
-}
 
 .footer {
     margin-top: 12px;

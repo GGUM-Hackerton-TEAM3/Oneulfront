@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom'; 
-import './MainScreen.css';
+import './FavoriteScreen.css';
+import Sidebar from '../mainScreen/Sidebar';
+import BellSidebar from '../mainScreen/BellSidebar';
 
-
-const MainScreen = ({ setCurrentScreen }) => {
+const MainScreen = () => {
     const [listItems, setListItems] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false); 
     const [loading, setLoading] = useState(true); 
     const [isBellSidebarOpen, setIsBellSidebarOpen] = useState(false);
-    const [favoriteItems, setFavoriteItems] = useState([]); // 찜한 아이템 저장
+    const [favoriteItems, setFavoriteItems] = useState([]); 
+    const [selectedIcons, setSelectedIcons] = useState([]); 
     const navigate = useNavigate(); 
 
-    // 백엔드에서 데이터를 가져오는 함수
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://codi.page/your-endpoint'); // 변경 필요
+                const response = await axios.get('https://codi.page/your-endpoint'); 
                 setListItems(response.data);
                 setLoading(false);
             } catch (error) {
@@ -36,21 +37,19 @@ const MainScreen = ({ setCurrentScreen }) => {
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen); 
     };
-    const closeSidebar = () => {
-        setIsSidebarOpen(false); 
-    };
-
+    
     const toggleBellSidebar = () => {
         setIsBellSidebarOpen(!isBellSidebarOpen); 
     };
+
+    const closeSidebar = () => {
+        setIsSidebarOpen(false); 
+    };
+    
     const closeBellSidebar = () => {
         setIsBellSidebarOpen(false); 
     };
 
-
-   
-
-     // 이미 찜한 경우에는 삭제, 아닌 경우에는 추가
     const handleHeartClick = (item) => {
         setFavoriteItems(prev => {
             const isFavorite = prev.includes(item.id);
@@ -62,17 +61,27 @@ const MainScreen = ({ setCurrentScreen }) => {
         });
         navigate('/favorite'); 
     };
-        const isItemFavorited = (id) => favoriteItems.includes(id); // 해당 아이템이 찜 목록에 있는지 확
 
+    const isItemFavorited = (id) => favoriteItems.includes(id); 
+
+    const handleIconClick = (icon) => {
+        setSelectedIcons((prev) => {
+            if (prev.includes(icon)) {
+                return prev.filter((i) => i !== icon); 
+            } else {
+                return [...prev, icon]; 
+            }
+        });
+    };
 
     return (
         <div className="main-screen">
-            <header className="icon-bar">
+              <header className="icon-bar">
                 <button className="icon-img" onClick={toggleSidebar}>
                     <img src="/menu.png" alt="메뉴" />
                 </button>
                 <button className="icon-img">
-                    <img src="/heart.png" alt="하트" onClick={handleHeartClick} />
+                    <img src="/greenheart.png" alt="하트" onClick={handleHeartClick} />
                 </button>
                 <div className="main-search-container">
                     <input
@@ -92,56 +101,25 @@ const MainScreen = ({ setCurrentScreen }) => {
                 </button>
             </header>
 
-
-
-            {isSidebarOpen && (
-                <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-                    <div className="sidebar-1">
-                        <button className="sidebar-1-btn" onClick={closeSidebar}>닫기</button>
-                    </div>
-                    <div className="sidebar-2">
-                        <ul>
-                            <li><button className="sidebar-2-btn" onClick={() => navigate('/main')}>홈</button></li>
-                            <li><button className="sidebar-2-btn" onClick={() => navigate('/mypage')}>마이페이지</button></li>
-                            <li><button className="sidebar-2-btn" onClick={() => navigate('/create')}>모임 만들기</button></li>
-                            <li><button className="sidebar-2-btn" onClick={() => navigate('/login')}>로그아웃</button></li>
-                        </ul>
-                    </div>
-                </div>
-            )}
-
-            {isBellSidebarOpen && (
-                            <div className={`bellsidebar ${isBellSidebarOpen ? 'open' : ''}`}>
-                                <div className="bellsidebar-1">
-                                    <button className="bellsidebar-1-btn" onClick={closeBellSidebar}>닫기</button>
-                                </div>
-                                <div className="bellsidebar-2">
-                                    <ul>
-                                        <li><button className="bellsidebar-2-btn" onClick={() => navigate('/main')}>홈</button></li>
-                                        <li><button className="bellsidebar-2-btn" onClick={() => navigate('/mypage')}>마이페이지</button></li>
-                                        <li><button className="bellsidebar-2-btn" onClick={() => navigate('/create')}>모임 만들기</button></li>
-                                        <li><button className="bellsidebar-2-btn" onClick={() => navigate('/login')}>로그아웃</button></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        )}
-
+            <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />
+            <BellSidebar isOpen={isBellSidebarOpen} closeSidebar={closeBellSidebar} />
+            
+            <div className="layout-section-favorite">
+                <h2>찜한 모임의 목록을 모아볼 수 있어요</h2>
+            </div>
 
             <div className="frame">
                 <div className="icon-grid">
-                    <button className="icon">영화</button>
-                    <button className="icon">공연/예술</button>
-                    <button className="icon">운동</button>
-                    <button className="icon">사진/영상</button>
-                    <button className="icon">음식</button>
-                    <button className="icon">게임/오락</button>
-                    <button className="icon">자기계발</button>
-                    <button className="icon">책/글</button>
+                    {['영화', '공연/예술', '운동', '사진/영상', '음식', '게임/오락', '자기계발', '책/글'].map((icon) => (
+                        <button 
+                            key={icon} 
+                            className={`icon ${selectedIcons.includes(icon) ? 'selected' : ''}`} 
+                            onClick={() => handleIconClick(icon)}
+                        >
+                            {icon}
+                        </button>
+                    ))}
                 </div>
-            </div>
-
-            <div className="layout-section-main">
-                <h2>이번주의 인기모임을 소개합니다!</h2>
             </div>
 
             <div className="scrollable-list">

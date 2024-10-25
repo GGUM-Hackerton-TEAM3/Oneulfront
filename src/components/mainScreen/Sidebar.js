@@ -5,18 +5,24 @@ import { useNavigate } from 'react-router-dom';
 const Sidebar = ({ isOpen, closeSidebar }) => {
     const navigate = useNavigate();
 
-    const handleHomeClick = () => {
-        closeSidebar();  
-        navigate('/main');
-    };
     
     const handleCreateClick = () => {
-        navigate('/create');
         closeSidebar();  
-
+        navigate('/create');
+    };
+    const handleLogin = () => {
+        closeSidebar();
+        navigate('/login');
     };
 
-
+    const handleLogout = () => {
+        closeSidebar();
+        navigate('/logo');
+    };
+    const handleMypage = () => {
+        closeSidebar();
+        navigate('/mypage');
+    };
 
     return (
         <div className={`sidebar ${isOpen ? 'open' : ''}`}>
@@ -25,9 +31,11 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
             </div>
             <div className="sidebar-2">
                 <ul>
-                <li> <button className="sidebar-2-btn" onClick={handleHomeClick}>홈</button>     </li>
-                <li> <button className="sidebar-2-btn"  onClick={handleHomeClick}>마이페이지</button> </li>
+                <li> <button className="sidebar-2-btn" onClick={handleLogin}> 홈 </button>     </li>
+                <li> <button className="sidebar-2-btn" onClick={handleMypage}>마이페이지</button> </li>
                 <li> <button className="sidebar-2-btn" onClick={handleCreateClick}>모임 만들기</button>   </li>
+                <li> <button className="sidebar-2-btn" onClick={handleLogout}>로그아웃</button> </li>
+
                 </ul>
             </div>
         </div>

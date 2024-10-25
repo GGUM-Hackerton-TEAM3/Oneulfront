@@ -1,0 +1,278 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* 세로 방향으로 정렬 */
+    align-items: center;
+    /* 중앙 정렬 */
+    justify-content: flex-start;
+    /* 상단 정렬 */
+}
+
+.container {
+  width: 393px;
+  height: 852px;
+    text-align: center;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    /* 최대 너비를 설정하여 너무 넓어지지 않도록 */
+    margin-top: 20px;
+    /* 상단 여백 추가 */
+}
+
+.icon-bar {
+  left: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 393px;
+  height: 40px;
+  gap: 9px;
+  margin-top: 56px;
+  margin-bottom: 20px;
+}
+
+.icon-img {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.icon-img img {
+  width: max-content;
+  height: max-content;
+  object-fit: contain;
+}
+
+@media (max-width: 393px) {
+  .icon-img {
+    width: 60px; 
+    height: 60px; 
+  }
+  .search-button {
+    width: 60px; 
+    height: 60px; 
+  }
+}
+
+.main-search-container {
+  display: flex;
+  flex-direction: row;
+  width: 220px;
+  height: 33px;
+  border: 1px solid #D9D9D9;
+  border-radius: 9999px;
+  gap: 10px;
+}
+
+.search-input {
+  width: 147px;
+  height: 16px;
+  order: 0;
+  border: #F1F2F3;
+}
+
+.search-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  margin-left: 1px;
+  margin-right: 14px;
+  background: transparent;
+  width: 31px;
+  height: 31px;
+  border: none;
+  cursor: pointer;
+}
+
+.search-button img {
+  width: 100%;
+  height: 100%;
+}
+  
+  .frame {
+    width: 344px;
+    height: 100px;
+    margin-bottom: 8px;
+    margin-top: 5px;
+  }
+  
+  .icon-grid {
+    display: grid;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    grid-template-columns: repeat(4, 1fr); /* 4개의 고정된 열로 설정 */
+    gap: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .icon {
+    flex: 1 1 auto; 
+    min-width: 75px; 
+    max-width: 85px; 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 8px; 
+    gap: 10px;
+    position: relative;
+    background: #FFFFFF;
+    border: 2px solid #93C296;
+    border-radius: 30px;
+    color: #9FA1A8;
+    text-align: center;
+    white-space: nowrap;
+  }
+  
+  
+  .icon img {
+    max-width: 100%;
+    height: auto;
+  }
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    /* 버튼이 화면 너비에 따라 줄 바꿈 */
+    justify-content: center;
+    /* 중앙 정렬 */
+    margin-bottom: 20px;
+    margin-bottom: 0;
+    /* 아래 여백 제거 */
+}
+
+.topic-button {
+    padding: 7px 0;
+    /* 패딩을 위아래만 조정하여 여백 최소화 */
+    margin: 5px;
+    cursor: pointer;
+    flex: 1 1 calc(25% - 10px);
+    /* 한 줄에 4개씩 들어가도록 설정 */
+    max-width: 90px;
+    /* 버튼 최대 너비 설정 */
+    border: 2px solid rgb(164, 196, 164);
+    /* 연한 녹색 테두리 */
+    background-color: white;
+    /* 배경색 흰색 */
+    color: rgb(156, 155, 155);
+    /* 글씨 색상 회색 */
+    border-radius: 20px;
+    /* 둥근 테두리 */
+    font-size: 14px;
+    /* 글자 크기 설정 */
+    white-space: nowrap;
+    /* 줄 바꿈을 방지 */
+    overflow: hidden;
+    /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis;
+    /* 넘치는 텍스트에 생략 부호(...) 추가 */
+    transition: background-color 0.3s, color 0.3s;
+    /* 부드러운 전환 효과 */
+}
+
+.topic-button:active,
+.topic-button:focus {
+    background-color: rgb(164, 196, 164);
+    /* 테두리 색상으로 채우기 */
+    color: white;
+    /* 글자 색상 흰색 */
+    outline: none;
+    /* 포커스 아웃라인 제거 */
+}
+
+
+.topic-button:hover {
+    background-color: #f0f0f0;
+    /* 호버 시 배경색 변화 */
+}
+
+.schedule-buttons {
+    display: flex;
+    justify-content: space-between;
+    /* 버튼 간격을 조정 */
+    margin-top: 0;
+    /* 위 여백 제거 */
+}
+
+.schedule-button {
+    padding: 5px 0;
+    margin: 5px;
+    cursor: pointer;
+    flex: 1;
+    /* 버튼의 기본 너비를 동일하게 설정 */
+    max-width: 90px;
+    /* 버튼 최대 너비 설정 */
+    border: 2px solid rgb(150, 150, 150);
+    /* 연한 회색 테두리 */
+    background-color: white;
+    /* 배경색 흰색 */
+    color: rgb(156, 155, 155);
+    /* 글씨 색상 회색 */
+    border-radius: 20px;
+    /* 둥근 테두리 */
+    font-size: 12px;
+    /* 글자 크기 설정 */
+    white-space: nowrap;
+    /* 줄 바꿈을 방지 */
+    transition: background-color 0.3s, color 0.3s;
+    /* 부드러운 전환 효과 */
+}
+
+.long-button {
+    flex: 1 1 10%;
+    /* 전체 너비 사용 */
+    max-width: none;
+    /* 최대 너비 제한 해제 */
+}
+
+
+
+.schedule-button:active,
+.schedule-button:focus {
+    background-color: rgb(150, 150, 150);
+    /* 테두리 색상으로 채우기 */
+    color: white;
+    /* 글자 색상 흰색 */
+    outline: none;
+    /* 포커스 아웃라인 제거 */
+}
+
+.schedule-button:hover {
+    background-color: #f0f0f0;
+    /* 호버 시 배경색 변화 */
+}
+
+#results {
+    margin-top: 20px;
+}
+
+@media (max-width: 400px) {
+    .topic-button {
+        flex: 1 1 100%;
+        /* 작은 화면에서는 버튼을 전체 너비로 설정 */
+    }
+}
+
+.topic-button.selected {
+    background-color: rgb(164, 196, 164);
+    /* 주제 버튼 선택 시 배경색 */
+    color: white;
+    /* 주제 버튼 선택 시 글씨 색상 */
+}
+
+/* 일정 버튼 선택 상태 */
+.schedule-button.selected {
+    background-color: rgb(150, 150, 150);
+    /* 일정 버튼 선택 시 배경색 */
+    color: white;
+    /* 일정 버튼 선택 시 글씨 색상 */
+}
