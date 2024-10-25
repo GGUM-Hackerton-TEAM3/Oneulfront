@@ -10,17 +10,16 @@ const MypageScreen = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isBellSidebarOpen, setIsBellSidebarOpen] = useState(false);
     const [profileImage, setProfileImage] = useState('/soccerking.png');
-    const [tempProfileImage, setTempProfileImage] = useState('/soccerking.png'); // Temporary state for new image
+    const [tempProfileImage, setTempProfileImage] = useState('/soccerking.png'); 
 
     const [userName, setUserName] = useState('');
     const [userDescription, setUserDescription] = useState('');
     const [buttonColor, setButtonColor] = useState('#C3C5CB'); 
 
     const handleRewrite = () => {
-        setProfileImage(tempProfileImage); // Update the profile image to the new one
+        setProfileImage(tempProfileImage); 
         setButtonColor('#1F241E'); 
         setTimeout(() => {
-            // Optional: reset button color after a delay
             setButtonColor('#C3C5CB');
         }, 2000); 
     };
@@ -92,7 +91,7 @@ const MypageScreen = () => {
 
                 <div className="layout2m">
                     <div className="layout2m-left">
-                        <img src={profileImage} alt="Profile" className="layout2m-image" /> {/* Updated to use profileImage */}
+                        <img src={profileImage} alt="Profile" className="layout2m-image" /> 
                     </div>
                     <div className="layout2m-right">
                         <input

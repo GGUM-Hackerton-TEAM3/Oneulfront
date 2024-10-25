@@ -12,8 +12,6 @@ import OnboardingPwScreen from './components/onboardingPwScreen/OnboardingPwScre
 import SearchScreen from './components/searchScreen/SearchScreen';
 
 
-
-
 const App = () => {
     const [currentScreen, setCurrentScreen] = useState('logo'); 
 

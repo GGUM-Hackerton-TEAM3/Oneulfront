@@ -181,7 +181,7 @@ const CreateScreen = () => {
                     </div>
                 </div>
 
-=                <div className="layout3-text-icons-group">
+             <div className="layout3-text-icons-group">
                     <div className="layout3-text">
                         <p>모임일시</p>
                     </div>
@@ -196,7 +196,7 @@ const CreateScreen = () => {
                 </div>
 
 
-=                <div className="frame">
+              <div className="frame">
                     <div className="layout3-text">
                         <p>카테고리 선택</p>
                     </div>

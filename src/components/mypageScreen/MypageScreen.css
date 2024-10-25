@@ -64,7 +64,7 @@
   width: 147px;
   height: 16px;
   order: 0;
-  border: #F1F2F3;
+  border: none;
 }
 
 .search-button {
@@ -249,5 +249,9 @@ input[type="textm"] {
 }
 
 .mypage-button:hover {
-  background-color: #686B73; /* Change color on hover */
+  background-color: #686B73; 
+}
+
+.rewrite-button:hover {
+  background-color: #686B73; 
 }
