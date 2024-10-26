@@ -53,8 +53,9 @@ return (
                                 type="text"
                                 id="school"
                                 required
-                                value={school}
-                                onChange={(e) => setSchool(e.target.value)}
+                                value="가톨릭대학교" 
+                                readOnly 
+                                style={{ fontSize: '13px' }}
                             />
                         </div>
                         <div>

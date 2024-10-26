@@ -34,7 +34,7 @@ const BellSidebar = ({ isOpen, closeBellSidebar }) => {
         setIsAlertActive(true);
         setIsChatActive(false);
     };
-    const closeBell = () => {
+    const handleCloseBellSidebar = () => {
         closeBellSidebar(); // Ensure this function is passed correctly
         navigate('/main');
     };
@@ -81,7 +81,7 @@ const BellSidebar = ({ isOpen, closeBellSidebar }) => {
             <div className="bellsidebar-3">
                 <button
                     className={`bellsidebar-3-btn`}
-                    onClick={closeBell}>   닫기
+                    onClick={handleCloseBellSidebar}>   닫기
                 </button>
             
             </div>

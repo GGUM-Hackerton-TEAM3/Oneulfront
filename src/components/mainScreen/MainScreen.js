@@ -4,6 +4,8 @@ import { fetchItems, call } from "../../service/ApiService";
 import Sidebar from '../sidebar/Sidebar';
 import BellSidebar from '../sidebar/BellSidebar';
 import './MainScreen.css';
+import { fetchMeetingsByCategory } from '../../service/ApiService'; // Change or keep this line
+
 
 const MainScreen = ({ setCurrentScreen }) => {
     const [listItems, setListItems] = useState([]);
@@ -14,9 +16,11 @@ const MainScreen = ({ setCurrentScreen }) => {
     const [favoriteItems, setFavoriteItems] = useState([]); 
     const navigate = useNavigate(); 
     const [selectedIcon, setSelectedIcon] = useState(null);
+    const [isHeartSidebarOpen, setIsHeartSidebarOpen] = useState(false);
+
 
     const fetchMeetingsByCategory = async (categoryName) => {
-        return call(`/api/categories/search/meetings?category=${categoryName}`, "GET");
+        return call(`/api/categories/search/meetings?categoryName=${categoryName}`, "GET");
     };
     const categoryMapping = {
         '영화': 'Movie',
@@ -47,21 +51,21 @@ const MainScreen = ({ setCurrentScreen }) => {
         }
     };
     
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const data = await fetchItems(); 
-                setListItems(data);
-            } catch (error) {
-                console.error("Failed to fetch data:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         setLoading(true);
+    //         try {
+    //             const data = await fetchItems(); 
+    //             setListItems(data);
+    //         } catch (error) {
+    //             console.error("Failed to fetch data:", error);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        fetchData();
-    }, []);
+    //     fetchData();
+    // }, []);
 
     const handleSearch = () => {
         navigate(`/search?query=${searchQuery}`); 
@@ -71,23 +75,24 @@ const MainScreen = ({ setCurrentScreen }) => {
         setIsSidebarOpen(!isSidebarOpen); 
     };
 
-    const closeSidebar = () => {
-        setIsSidebarOpen(false); 
-    };
+   
 
     const toggleBellSidebar = () => {
         setIsBellSidebarOpen(!isBellSidebarOpen); 
     };
 
-    const closeBellSidebar = () => {
-        setIsBellSidebarOpen(false); 
-    };
+    const openSidebar = () => setIsSidebarOpen(true);
+    const closeSidebar = () => setIsSidebarOpen(false);
+    
+    const openBellSidebar = () => setIsBellSidebarOpen(true);
+    const closeBellSidebar = () => setIsBellSidebarOpen(false);
 
     const handleHeartClick = (item) => {
         setFavoriteItems(prev => {
             const isFavorite = prev.includes(item.id);
             return isFavorite ? prev.filter(id => id !== item.id) : [...prev, item.id];
         });
+        closeBellSidebar(); // BellSidebar를 닫음
         navigate('/favorite'); 
     };
 
@@ -95,6 +100,7 @@ const MainScreen = ({ setCurrentScreen }) => {
 
     return (
         <div className="main-screen">
+            
             <header className="icon-bar">
                 <button className="icon-img" onClick={toggleSidebar}>
                     <img src="/menu.png" alt="메뉴" />
@@ -116,7 +122,7 @@ const MainScreen = ({ setCurrentScreen }) => {
                         <img src="/search.png" alt="검색" />
                     </button>
                 </div>
-                <button className="icon-img" onClick={toggleBellSidebar}>
+                <button className="icon-img" onClick={openBellSidebar}>
                     <img src="/bell.png" alt="벨" />
                 </button>
             </header>
@@ -167,7 +173,12 @@ const MainScreen = ({ setCurrentScreen }) => {
                 ))}
             </div>
             {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />}
-            {isBellSidebarOpen && <BellSidebar isOpen={isBellSidebarOpen} closeBellSidebar={closeBellSidebar} />}
+            {isBellSidebarOpen && (
+                <BellSidebar
+                    isOpen={isBellSidebarOpen}
+                    closeBellSidebar={closeBellSidebar} // Ensure the correct function is passed
+                />
+            )}
         </div>
     );
 };

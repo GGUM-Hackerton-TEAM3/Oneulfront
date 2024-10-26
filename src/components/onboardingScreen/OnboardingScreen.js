@@ -39,7 +39,7 @@ function OnboardingScreen() {
               <input
                 type="text"
                 id="name"
-                placeholder="김바보"
+                placeholder="홍길동"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required

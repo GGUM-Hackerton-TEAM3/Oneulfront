@@ -65,13 +65,13 @@ export const signup = async (userDTO) => {
     }
 };
 
-// 백엔드에서 아이템 목록 가져오기
-export const fetchItems = async () => {
-    const response = await call("/items", "GET"); // Using call to ensure consistent API usage
-    return response; // Return the fetched data
-};
+// // 백엔드에서 아이템 목록 가져오기
+// export const fetchItems = async () => {
+//     const response = await call("/items", "GET"); // Using call to ensure consistent API usage
+//     return response; // Return the fetched data
+// };
 
 // 카테고리 관련 api 함수
 export const fetchMeetingsByCategory = async (categoryName) => {
-    return call(`/api/categories/search/meetings?category=${categoryName}`, "GET");
+    return call(`/api/categories/search/meetings?categoryName=${categoryName}`, "GET");
 };  
