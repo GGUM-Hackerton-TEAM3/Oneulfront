@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import BellSidebar from '../sidebar/BellSidebar';
+import { fetchItems, call } from "../../service/ApiService"; 
 import './GroupDetailScreen.css'; // CSS 파일 임포트
 
 const GroupDetailScreen = () => {
@@ -8,11 +10,20 @@ const GroupDetailScreen = () => {
   const [activeButton, setActiveButton] = useState('home'); // 활성 버튼 상태
   const [isHeartActive, setIsHeartActive] = useState(false); // 하트 상태
   const [listItems, setListItems] = useState([]); // 목록 아이템 상태
+  const [isBellSidebarOpen, setIsBellSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(''); // 검색 쿼리 상태
   const [isSidebarOpen, setIsSidebarOpen] = useState(false); // 사이드바 열기 상태
+  const [favoriteItems, setFavoriteItems] = useState([]); 
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [selectedIcon, setSelectedIcon] = useState(null);
 
+  
+  const openSidebar = () => setIsSidebarOpen(true);
+  const closeSidebar = () => setIsSidebarOpen(false);
+  
+  const openBellSidebar = () => setIsBellSidebarOpen(true);
+  const closeBellSidebar = () => setIsBellSidebarOpen(false);
   // 모임 장소 데이터 요청
   const fetchLocation = async () => {
     try {
@@ -59,26 +70,94 @@ const GroupDetailScreen = () => {
   const handleSearch = () => {
     navigate(`/search?query=${searchQuery}`);
   };
+  const handleHeartClick = (item) => {
+    setFavoriteItems(prev => {
+        const isFavorite = prev.includes(item.id);
+        return isFavorite ? prev.filter(id => id !== item.id) : [...prev, item.id];
+    });
+    navigate('/favorite'); 
+};
+ const fetchMeetingsByCategory = async (categoryName) => {
+        return call(`/api/categories/search/meetings?categoryName=${categoryName}`, "GET");
+    };
+const categoryMapping = {
+  '영화': 'Movie',
+  '공연/예술': 'Performance/Art',
+  '운동': 'Exercise',
+  '음식': 'Food',
+  '자기계발': 'Self-Development',
+  '사진/영상': 'Photography/Video',
+  '책/글': 'Book/Writing',
+  '게임/오락': 'Game/Entertainment'
+};
+
+const handleIconClick = async (iconText) => {
+  setSelectedIcon(iconText);
+  const backendCategory = categoryMapping[iconText]; 
+
+  console.log('선택한 카테고리:', backendCategory); // 디버깅
+
+  if (backendCategory) {
+      try {
+          const response = await fetchMeetingsByCategory(backendCategory); // 전용 함수 사용
+          setListItems(response); 
+      } catch (error) {
+          console.error("카테고리 데이터 가져오기 실패:", error);
+      }
+  } else {
+      console.error("잘못된 카테고리:", iconText);
+  }
+};
 
   return (
+    <div className="scrollable-list">
     <div>
-      <header className="icon-bar">
-        <button className="icon-img" onClick={toggleSidebar}>
-          <img src="/menu.png" alt="메뉴" />
-        </button>
-        <div className="main-search-container">
-          <input
-            type="text"
-            className="search-input"
-            placeholder="검색어를 입력하세요"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button className="search-button" onClick={handleSearch}>
-            <img src="/search.png" alt="검색" />
-          </button>
-        </div>
-      </header>
+         <header className="icon-bar">
+              <button className="icon-img" onClick={openSidebar}>
+                  <img src="/menu.png" alt="메뉴" />
+              </button>
+
+              <button className="icon-img">
+                  <img src="/heart.png" alt="하트" onClick={handleHeartClick} />
+              </button>
+              <div className="main-search-container">
+                  <input
+                      type="text1"
+                      className="search-input"
+                      placeholder=""
+                      value={searchQuery}
+                      onClick={handleSearch}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <button className="search-button" onClick={handleSearch}>
+                      <img src="/search.png" alt="검색" />
+                  </button>
+              </div>
+              <button className="icon-img" onClick={openBellSidebar}>
+                  <img src="/bell.png" alt="벨" />
+              </button>
+              {isBellSidebarOpen && (
+          <BellSidebar isOpen={isBellSidebarOpen} closeBellSidebar={closeBellSidebar} />
+      )}
+          </header>
+
+          <div className="frame">
+                <div className="icon-grid">
+                    {Object.keys(categoryMapping).map((iconText, index) => (
+                        <button
+                            key={index}
+                            className="icon"
+                            onClick={() => handleIconClick(iconText)}
+                            style={{
+                                backgroundColor: selectedIcon === iconText ? '#93C296' : 'transparent',
+                                color: selectedIcon === iconText ? 'white' : 'black'
+                            }} 
+                        >
+                            {iconText}
+                        </button>
+                    ))}
+                </div>
+            </div>
 
       {isSidebarOpen && (
         <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
@@ -117,9 +196,9 @@ const GroupDetailScreen = () => {
         </button>
       </div>
 
-      <div className="message" id="message">
+      <div className="message22" id="message">
         <img
-          src="https://search.pstatic.net/common/?src=http%3A%2F%2Fcafefiles.naver.net%2F20160124_204%2Fwoo2day_14536386846908d1n6_PNG%2FScreenshot_2016-01-24-21-27-36-1-1.png&type=a340"
+          src= "/drawing.png"
           alt="멍충거위"
           width="50%"
         />
@@ -154,7 +233,7 @@ const GroupDetailScreen = () => {
           <div className="rounded-rectangle">#부천시</div>
         </div>
       </div>
-    </div>
+    </div></div>
   );
 };
 

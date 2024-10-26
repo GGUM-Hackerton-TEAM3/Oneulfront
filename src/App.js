@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; 
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'; 
 import LogoScreen from './components/logoScreen/LogoScreen';
 import LoginScreen from './components/loginScreen/LoginScreen';
 import MainScreen from './components/mainScreen/MainScreen';
@@ -12,30 +12,14 @@ import OnboardingPwScreen from './components/onboardingPwScreen/OnboardingPwScre
 import SearchScreen from './components/searchScreen/SearchScreen';
 import GroupDetailScreen from './components/groupDetailScreen/GroupDetailScreen';
 
-
 const App = () => {
-    const [currentScreen, setCurrentScreen] = useState('logo'); 
-
-    useEffect(() => {
-        if (currentScreen === 'logo') {
-            const timer = setTimeout(() => {
-                setCurrentScreen('login'); 
-            }, 3000); 
-            return () => clearTimeout(timer);
-        }
-    }, [currentScreen]);
-
-    const handleLogin = () => {
-        setCurrentScreen('main'); 
-    };
-
     return (
         <BrowserRouter> 
             <div>
                 <Routes>
-                    <Route path="/" element={<LogoScreen />} />          
-                    <Route path="/login" element={<LoginScreen />} />          
-                    <Route path="/main" element={<MainScreen />} />          
+                    <Route path="/" element={<LogoScreen />} />
+                    <Route path="/login" element={<LoginScreen />} />
+                    <Route path="/main" element={<MainScreen />} />
                     <Route path="/chat" element={<ChatScreen />} />
                     <Route path="/create" element={<CreateScreen />} />
                     <Route path="/favorite" element={<FavoriteScreen />} />
@@ -45,7 +29,6 @@ const App = () => {
                     <Route path="/mypage" element={<MypageScreen />} />
                     <Route path="/search" element={<SearchScreen />} />
                     <Route path="*" element={<Navigate to="/" />} />
-
                 </Routes>
             </div>
         </BrowserRouter>

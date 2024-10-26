@@ -6,7 +6,6 @@ const BellSidebar = ({ isOpen, closeBellSidebar }) => {
 
     const navigate = useNavigate();
     const [meetings, setMeetings] = useState([]);
-    const [isChatActive, setIsChatActive] = useState(false);
     const [isAlertActive, setIsAlertActive] = useState(false);
 
     useEffect(() => {
@@ -25,17 +24,12 @@ const BellSidebar = ({ isOpen, closeBellSidebar }) => {
         }
     }, [isOpen]);
 
-    const handleChatClick = () => {
-        setIsChatActive(true);
-        setIsAlertActive(false);
-    };
 
     const handleAlertClick = () => {
         setIsAlertActive(true);
-        setIsChatActive(false);
     };
     const handleCloseBellSidebar = () => {
-        closeBellSidebar(); // Ensure this function is passed correctly
+        closeBellSidebar(); 
         navigate('/main');
     };
 
@@ -44,14 +38,9 @@ const BellSidebar = ({ isOpen, closeBellSidebar }) => {
     return (
         <div className={`bellsidebar ${isOpen ? 'open' : ''}`}>
             <div className="bellsidebar-1">
-                <button
-                    className={`bellsidebar-1-btn ${isChatActive ? 'active' : ''}`}
-                    onClick={handleChatClick}>   채팅
-                </button>
-                <button
-                    className={`bellsidebar-alert-btn ${isAlertActive ? 'active' : ''}`}
-                    onClick={handleAlertClick}>    알림
-                </button>
+                <p>
+                    참여 목록
+                </p>
             </div>
 
             <div className="bellsidebar-2">
@@ -60,8 +49,7 @@ const BellSidebar = ({ isOpen, closeBellSidebar }) => {
                 <li className="meeting-item">
                         <img src="https://via.placeholder.com/50" alt="Meeting" className="meeting-image" /> {/* Replace with your image URL */}
                         <div className="meeting-details">
-                            <h4 className="meeting-title">모임 제목</h4> {/* Replace with your title */}
-                            <p className="meeting-description">모임 설명 내용입니다.</p> {/* Replace with your description */}
+                            <h4 className="meeting-title">쿠키 베이킷!(Bake it!)</h4> {/* Replace with your title */}
                         </div>
                     </li>
 
@@ -71,7 +59,6 @@ const BellSidebar = ({ isOpen, closeBellSidebar }) => {
                             <img src={meeting.image} alt={meeting.title} className="meeting-image" />
                             <div className="meeting-details">
                                 <h4 className="meeting-title">{meeting.title}</h4>
-                                <p className="meeting-description">{meeting.description}</p>
                             </div>
                         </li>
                     ))}

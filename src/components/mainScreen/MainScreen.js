@@ -78,7 +78,8 @@ const MainScreen = ({ setCurrentScreen }) => {
         }
     };
 
-    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
+    const openSidebar = () => setIsSidebarOpen(true);
     const closeSidebar = () => setIsSidebarOpen(false);
     const toggleBellSidebar = () => setIsBellSidebarOpen(!isBellSidebarOpen);
     const closeBellSidebar = () => setIsBellSidebarOpen(false);
@@ -96,7 +97,7 @@ const MainScreen = ({ setCurrentScreen }) => {
     return (
         <div className="main-screen">
             <header className="icon-bar">
-                <button className="icon-img" onClick={toggleSidebar}>
+                <button className="icon-img" onClick={openSidebar}>
                     <img src="/menu.png" alt="메뉴" />
                 </button>
                 <button className="icon-img" onClick={() => navigate('/favorite')}>
@@ -117,6 +118,9 @@ const MainScreen = ({ setCurrentScreen }) => {
                 <button className="icon-img" onClick={toggleBellSidebar}>
                     <img src="/bell.png" alt="알림" />
                 </button>
+                {isBellSidebarOpen && (
+           <BellSidebar isOpen={isBellSidebarOpen} closeBellSidebar={closeBellSidebar} />
+           )}
             </header>
 
             <div className="frame">
@@ -165,7 +169,6 @@ const MainScreen = ({ setCurrentScreen }) => {
                 ))}
             </div>
             {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />}
-            {isBellSidebarOpen && <BellSidebar isOpen={isBellSidebarOpen} closeBellSidebar={closeBellSidebar} />}
         </div>
     );
 };

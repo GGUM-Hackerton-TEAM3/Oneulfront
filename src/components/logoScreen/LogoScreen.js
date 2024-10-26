@@ -1,24 +1,22 @@
+// LogoScreen.js
 import React, { useEffect } from 'react';
-import './LogoScreen.css';
 import { useNavigate } from 'react-router-dom';
+import './LogoScreen.css';
 
 const LogoScreen = () => {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            navigate('/login'); // Redirect to login screen after 3 seconds
-        }, 3000);
+    const handleLogin = () => {
+        navigate('/login');
+    };
 
-        return () => clearTimeout(timer); // Clean up the timer if the component unmounts
-    }, [navigate]);
 
     return (
-        <div className="logo-screen">
-            <img src="/logo.png" alt="Logo" />
-        </div>
+
+        <button2 className="logo-screen" onClick={handleLogin}>
+                                    <img src="/logo.png" alt="logo" />
+                                </button2>
     );
 };
 
 export default LogoScreen;
-
