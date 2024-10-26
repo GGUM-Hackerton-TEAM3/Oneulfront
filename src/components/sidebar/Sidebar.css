@@ -1,4 +1,4 @@
-.bell-sidebar {
+.sidebar {
     position: absolute;
     top: 0;
     left: -200px; 
@@ -9,29 +9,27 @@
     z-index: 1000;
 }
 
-.bell-sidebar.open {
+.sidebar.open {
     left: 0;
     opacity: 1; 
 }
-
-.bell-sidebar.closed {
+.sidebar.closed {
     left: -200px; 
     opacity: 0; 
     display: none; 
 }
 
-.bell-sidebar-header {
+.sidebar-1 {
     background-color: #4C8850; 
-    width: 100%;
+    width: 200px;
     height: 73px; 
     display: flex;
     justify-content: center; 
     align-items: center; 
 }
-
-.bell-sidebar-close-btn {
+.sidebar-1-btn {
     background-color: #4C8850; 
-    color: white; 
+    color: black;
     border: none;
     padding: 10px;
     cursor: pointer;
@@ -39,39 +37,37 @@
     text-align: center; 
 }
 
-.bell-sidebar-content {
+.sidebar-2 {
     width: 200px;
     margin-top: 40px;
     background-color: white; 
+  
 }
 
-.bell-sidebar-menu {
+.sidebar ul {
     list-style-type: none;
     padding: 0;
 }
 
-.bell-sidebar-menu-item {
-    width: 100%;
-    margin: 10px 0;
+.sidebar li {
+    width: 163px;
+    margin: 10px 19px;
     border-bottom: 1px solid #888;
+
 }
 
-.bell-sidebar-menu-item:last-child {
+.sidebar-2 li:last-child{
     border-bottom: none;
 }
 
-.bell-sidebar-menu-item {
+.sidebar-2-btn {
     background-color: white; 
     color: black;
     border: none;
     padding: 10px;
     cursor: pointer;
-    width: 100%;
+    width: 163px;
     text-align: center; 
     font-family: 'Pretendard';
-    transition: background-color 0.3s ease;
-}
 
-.bell-sidebar-menu-item:hover {
-    background-color: #f0f0f0; /* Hover effect */
 }

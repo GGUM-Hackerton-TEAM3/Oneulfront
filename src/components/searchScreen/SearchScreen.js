@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './SearchScreen.css'; 
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../mainScreen/Sidebar';
+import Sidebar from '../sidebar/Sidebar';
+import BellSidebar from '../sidebar/BellSidebar';
+
 
 const SearchScreen = () => {
     const [query, setQuery] = useState('');
@@ -65,6 +67,10 @@ const SearchScreen = () => {
     const toggleBellSidebar = () => {
         setIsBellSidebarOpen(!isBellSidebarOpen);
     };
+      
+    const closeBellSidebar = () => {
+        setIsBellSidebarOpen(false); 
+    };
 
     return (
         <div className="container">
@@ -92,6 +98,9 @@ const SearchScreen = () => {
                             <img src="/bell.png" alt="벨" />
                         </button>
                     </header>
+
+            <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />
+            <BellSidebar isOpen={isBellSidebarOpen} closeSidebar={closeBellSidebar} />
 
             {isSidebarOpen && <Sidebar onClose={closeSidebar} />}
 

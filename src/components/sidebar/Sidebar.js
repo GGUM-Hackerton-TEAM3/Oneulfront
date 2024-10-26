@@ -12,7 +12,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
     };
     const handleLogin = () => {
         closeSidebar();
-        navigate('/login');
+        navigate('/main');
     };
 
     const handleLogout = () => {

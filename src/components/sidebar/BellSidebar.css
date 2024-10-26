@@ -1,0 +1,103 @@
+.bellsidebar {
+    position: absolute; 
+    right: -200px; 
+    width: 314px;
+    height: 100%;
+    background-color: white; 
+    transition: right 0.3s ease; 
+    z-index: 1000;
+}
+
+.bellsidebar.open {
+    right: 0; 
+}
+
+.bellsidebar-1 {
+    background-color: white; 
+    width: 200px;
+    height: 73px; 
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-left: 60px;
+    align-items: center; 
+}
+
+.bellsidebar-1-btn,
+.bellsidebar-alert-btn {
+    background-color: #DDDFE3; 
+    color: white; 
+    border: none;
+    cursor: pointer;
+    width: 80px;
+    height: 28px;
+    border: black;
+    border-radius: 10px;
+}
+
+.bellsidebar-1-btn.active,
+.bellsidebar-alert-btn.active {
+    background-color: black; 
+    color: white; 
+}
+
+
+.bellsidebar-2 {
+    width: 200px;
+    height: 650px;
+    margin-left: 60px;
+    margin-top: 10px; 
+}
+
+.bellsidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.meeting-item {
+    display: flex; 
+    align-items: center; 
+    padding: 10px; 
+    border-bottom: 1px solid #888; 
+}
+
+.meeting-item:last-child {
+    border-bottom: none; 
+}
+
+.meeting-image {
+    width: 50px;
+    height: 50px; 
+    margin-right: 10px; 
+}
+
+.meeting-details {
+    flex-grow: 1; 
+}
+
+.meeting-title {
+    margin: 0; 
+    font-size: 14px; 
+}
+
+.meeting-description {
+    margin: 0; 
+    font-size: 12px; 
+}
+
+.bellsidebar-3-btn{
+    margin-bottom: 10px;
+    background-color: #DDDFE3; 
+    color: white; 
+    border: none;
+    cursor: pointer;
+    width: 200px;
+    height: 28px;
+    border: black;
+    border-radius: 10px;
+    transition: background-color 0.3s ease; 
+
+}
+.bellsidebar-3-btn:hover {
+    background-color: black; 
+    color: white; }

@@ -35,7 +35,7 @@ const App = () => {
                     <Route path="/" element={currentScreen === 'logo' ? <LogoScreen /> : <Navigate to="/login" />} />
                     <Route path="/login" element={currentScreen === 'login' ? <LoginScreen onLogin={handleLogin} /> : <Navigate to="/main" />} />
                     <Route path="/main" element={currentScreen === 'main' ? <MainScreen setCurrentScreen={setCurrentScreen} /> : <Navigate to="/login" />} />
-                    <Route path="/chat" element={currentScreen === 'chat' ? <ChatScreen /> : <Navigate to="/main" />} />
+                    <Route path="/chat" element={<ChatScreen />} />
                     <Route path="/create" element={<CreateScreen />} />
                     <Route path="/favorite" element={<FavoriteScreen />} />
                     <Route path="/onboarding" element={<OnboardingScreen />} />

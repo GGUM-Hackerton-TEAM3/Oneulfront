@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom'; 
+import { call } from "../../service/ApiService";
+import Sidebar from '../sidebar/Sidebar';
+import BellSidebar from '../sidebar/BellSidebar';
 import './MainScreen.css';
+
 
 
 const MainScreen = ({ setCurrentScreen }) => {
@@ -16,13 +19,14 @@ const MainScreen = ({ setCurrentScreen }) => {
     // 백엔드에서 데이터를 가져오는 함수
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
-                const response = await axios.get('https://codi.page/your-endpoint'); // 변경 필요
-                setListItems(response.data);
-                setLoading(false);
+                const data = await call('/your-endpoint', 'GET'); // Replace with your actual endpoint
+                setListItems(data);
             } catch (error) {
-                console.error("데이터를 가져오는데 실패했습니다:", error);
-                setLoading(false); 
+                console.error("Failed to fetch data:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -71,6 +75,8 @@ const MainScreen = ({ setCurrentScreen }) => {
                 <button className="icon-img" onClick={toggleSidebar}>
                     <img src="/menu.png" alt="메뉴" />
                 </button>
+                <Sidebar isOpen={isSidebarOpen} closeBellSidebar={closeSidebar} />
+
                 <button className="icon-img">
                     <img src="/heart.png" alt="하트" onClick={handleHeartClick} />
                 </button>
@@ -90,42 +96,8 @@ const MainScreen = ({ setCurrentScreen }) => {
                 <button className="icon-img" onClick={toggleBellSidebar}>
                     <img src="/bell.png" alt="벨" />
                 </button>
+
             </header>
-
-
-
-            {isSidebarOpen && (
-                <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-                    <div className="sidebar-1">
-                        <button className="sidebar-1-btn" onClick={closeSidebar}>닫기</button>
-                    </div>
-                    <div className="sidebar-2">
-                        <ul>
-                            <li><button className="sidebar-2-btn" onClick={() => navigate('/main')}>홈</button></li>
-                            <li><button className="sidebar-2-btn" onClick={() => navigate('/mypage')}>마이페이지</button></li>
-                            <li><button className="sidebar-2-btn" onClick={() => navigate('/create')}>모임 만들기</button></li>
-                            <li><button className="sidebar-2-btn" onClick={() => navigate('/login')}>로그아웃</button></li>
-                        </ul>
-                    </div>
-                </div>
-            )}
-
-            {isBellSidebarOpen && (
-                            <div className={`bellsidebar ${isBellSidebarOpen ? 'open' : ''}`}>
-                                <div className="bellsidebar-1">
-                                    <button className="bellsidebar-1-btn" onClick={closeBellSidebar}>닫기</button>
-                                </div>
-                                <div className="bellsidebar-2">
-                                    <ul>
-                                        <li><button className="bellsidebar-2-btn" onClick={() => navigate('/main')}>홈</button></li>
-                                        <li><button className="bellsidebar-2-btn" onClick={() => navigate('/mypage')}>마이페이지</button></li>
-                                        <li><button className="bellsidebar-2-btn" onClick={() => navigate('/create')}>모임 만들기</button></li>
-                                        <li><button className="bellsidebar-2-btn" onClick={() => navigate('/login')}>로그아웃</button></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        )}
-
 
             <div className="frame">
                 <div className="icon-grid">
@@ -167,6 +139,8 @@ const MainScreen = ({ setCurrentScreen }) => {
                     </div>
                 ))}
             </div>
+            {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />}
+            {isBellSidebarOpen && <BellSidebar isOpen={isBellSidebarOpen} closeSidebar={closeBellSidebar} />}
         </div>
     );
 };

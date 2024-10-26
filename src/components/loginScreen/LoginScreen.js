@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import './LoginScreen.css';
 
 const LoginScreen = ({onLogin}) => {
-    const [id, setId] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
 
     const handleLogin = () => {
-        console.log('ID:', id);
+        console.log('email:', email);
         console.log('Password:', password);
         onLogin();
         navigate('/main')
@@ -31,10 +31,10 @@ const LoginScreen = ({onLogin}) => {
     
             <div className="login-container">
                 <input
-                    type="id"
+                    type="email"
                     placeholder="아이디를 입력하세요"
-                    value={id}
-                    onChange={(e) => setId(e.target.value)}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="input-field"
                 />
             </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import Sidebar from '../mainScreen/Sidebar';
-import BellSidebar from '../mainScreen/BellSidebar';
+import Sidebar from '../sidebar/Sidebar';
+import BellSidebar from '../sidebar/BellSidebar';
 import './MypageScreen.css';
 
 const MypageScreen = () => {
@@ -11,7 +11,7 @@ const MypageScreen = () => {
     const [isBellSidebarOpen, setIsBellSidebarOpen] = useState(false);
     const [profileImage, setProfileImage] = useState('/soccerking.png');
     const [tempProfileImage, setTempProfileImage] = useState('/soccerking.png'); 
-
+    const [favoriteItems, setFavoriteItems] = useState([]); // 찜한 아이템 저장
     const [userName, setUserName] = useState('');
     const [userDescription, setUserDescription] = useState('');
     const [buttonColor, setButtonColor] = useState('#C3C5CB'); 
@@ -53,34 +53,48 @@ const MypageScreen = () => {
             prevImage === '/soccerking.png' ? '/bakeit.png' : '/soccerking.png'
         );
     };
+    const handleHeartClick = (item) => {
+        setFavoriteItems(prev => {
+            const isFavorite = prev.includes(item.id);
+            if (isFavorite) {
+                return prev.filter(id => id !== item.id); 
+            } else {
+                return [...prev, item.id];
+            }
+        });
+        navigate('/favorite'); 
+    };
+        const isItemFavorited = (id) => favoriteItems.includes(id); // 해당 아이템이 찜 목록에 있는지 확
+
 
     return (
         <div className="create-screenm">
             <div className="scroll-container">    
-                <header className="icon-barm">
-                    <button className="icon-img" onClick={toggleSidebar}>
-                        <img src="/menu.png" alt="메뉴" />
+            <header className="icon-bar">
+                <button className="icon-img" onClick={toggleSidebar}>
+                    <img src="/menu.png" alt="메뉴" />
+                </button>
+                <button className="icon-img">
+                    <img src="/heart.png" alt="하트" onClick={handleHeartClick} />
+                </button>
+                <div className="main-search-container">
+                    <input
+                        type="text1"
+                        className="search-input"
+                        placeholder=""
+                        value={searchQuery}
+                        onClick={handleSearch}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <button className="search-button" onClick={handleSearch}>
+                        <img src="/search.png" alt="검색" />
                     </button>
-                    <button className="icon-img">
-                        <img src="/heart.png" alt="하트"  />
-                    </button>
-                    <div className="main-search-container">
-                        <input
-                            type="text"
-                            className="search-input"
-                            placeholder=""
-                            value={searchQuery}
-                            onClick={handleSearch}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
-                        <button className="search-button" onClick={handleSearch}>
-                            <img src="/search.png" alt="검색" />
-                        </button>
-                    </div>
-                    <button className="icon-img" onClick={toggleBellSidebar}>
-                        <img src="/bell.png" alt="벨" />
-                    </button>
-                </header>
+                </div>
+                <button className="icon-img" onClick={toggleBellSidebar}>
+                    <img src="/bell.png" alt="벨" />
+                </button>
+            </header>
+
         
                 <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />
                 <BellSidebar isOpen={isBellSidebarOpen} closeSidebar={closeBellSidebar} />

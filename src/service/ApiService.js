@@ -1,51 +1,63 @@
-import { API_BASE_URL } from "../app-config";
-const ACCESS_TOKEN = "ACCESS_TOKEN";
+import { API_BASE_URL } from "../service/app-config"; // Import the defined API_BASE_URL
+const ACCESS_TOKEN = "ACCESS_TOKEN"; // Keep ACCESS_TOKEN declaration
 
-export function call(api, method, request) {
-    let headers = new Headers({
-        "Content-Type": "application/json",
-    });
+export function call(api, method, request, isMultipart = false) {
+    let headers = new Headers();
+    
+    if (!isMultipart) {
+        headers.append("Content-Type", "application/json"); // For regular JSON requests
+    }
+    
     const accessToken = localStorage.getItem(ACCESS_TOKEN);
     if (accessToken) {
         headers.append("Authorization", "Bearer " + accessToken);
     }
 
     let options = {
-        headers: headers,
-        url: API_BASE_URL + api,
         method: method,
+        headers: headers,
     };
+    
     if (request) {
-        options.body = JSON.stringify(request);
+        options.body = isMultipart ? request : JSON.stringify(request); // Use request directly for multipart
     }
-    return fetch(options.url, options).then((response) =>
-        response.json().then((json) => {
+
+    return fetch(API_BASE_URL + api, options)
+        .then((response) => {
             if (!response.ok) {
-                return Promise.reject(json);
+                return response.json().then((json) => {
+                    if (response.status === 403) {
+                        window.location.href = "/login"; // Redirect if 403
+                    }
+                    return Promise.reject(json);
+                });
             }
-            return json;
+            return response.json();
         })
-    ).catch((error) => {
-        console.log(error.status);
-        if (error.status === 403) {
-            window.location.href = "/login";
-        }
-        return Promise.reject(error);
-    });
+        .catch((error) => {
+            console.error("Fetch error:", error); // Log the full error object
+            return Promise.reject(error);
+        });
 }
 
 export function signin(userDTO) {
-    return call("/auth/signin", "POST", userDTO)
+    const formData = new FormData(); // Create a FormData object
+    Object.keys(userDTO).forEach((key) => {
+        formData.append(key, userDTO[key]); // Append each field to the FormData object
+    });
+
+    return call("/auth/signin", "POST", formData, true) // Set isMultipart to true
         .then((response) => {
             if (response.token) {
                 localStorage.setItem(ACCESS_TOKEN, response.token);
-                window.location.href = "/";
+                window.location.href = "/"; // Redirect to the main page
             }
         });
 }
 
+// Other functions remain unchanged
 export function signup(userDTO) {
-    return call("/auth/signup", "POST", userDTO)
+    return call("/auth/signup", "POST", userDTO) // Regular JSON request
         .then((response) => {
             if (response.id) {
                 window.location.href = "/";
@@ -62,19 +74,6 @@ export function signup(userDTO) {
 }
 
 export function signout() {
-    localStorage.setItem(ACCESS_TOKEN, null);
-    window.location.href = "/"
-}
-
-export function googleAuth(token) {
-    return call("/auth/google", "POST", { token })
-        .then((response) => {
-            if (response.token) {
-                localStorage.setItem(ACCESS_TOKEN, response.token);
-                window.location.href = "/";
-            }
-        })
-        .catch((error) => {
-            console.log("Google authentication failed:", error);
-        });
+    localStorage.removeItem(ACCESS_TOKEN);
+    window.location.href = "/";
 }

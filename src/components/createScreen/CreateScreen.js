@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import Sidebar from '../mainScreen/Sidebar';
-import BellSidebar from '../mainScreen/BellSidebar';
+import Sidebar from '../sidebar/Sidebar';
+import BellSidebar from '../sidebar/BellSidebar';
 
 import './CreateScreen.css';
 
@@ -16,6 +16,7 @@ const CreateScreen = () => {
     const [meetingDescription, setMeetingDescription] = useState('');
     const [meetingDate, setMeetingDate] = useState('');
     const [categoryInput1, setCategoryInput1] = useState('');
+    const [tempProfileImage, setTempProfileImage] = useState('/soccerking.png'); 
     const [categoryInput2, setCategoryInput2] = useState('');
 
     const [userName, setUserName] = useState('');
@@ -70,6 +71,11 @@ const CreateScreen = () => {
         navigate('/favorite'); 
     };
 
+    const handleProfileImageClick = () => {
+        setTempProfileImage(prevImage => 
+            prevImage === '/soccerking.png' ? '/bakeit.png' : '/soccerking.png'
+        );
+    };
      useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -240,8 +246,10 @@ const CreateScreen = () => {
 
                 <div className="layout3-image">
                     <div className="layout3-left">
-                        <img src="/soccer.png" alt="soccer" className="layout3-image" />
-                    </div>
+                    <button onClick={handleProfileImageClick}>
+                            <img src={tempProfileImage} alt="soccer" className="layout3-image" />
+                    </button>                    
+        </div>
                     <div className="layout3-right">
                         <p>좌측 원을 터치하여 <br />모임 사진을 고를 수 있습니다</p>
                     </div>
@@ -253,5 +261,6 @@ const CreateScreen = () => {
         </div>
     );
 }
+
 
 export default CreateScreen; 

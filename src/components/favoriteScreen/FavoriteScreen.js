@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
 import { useNavigate } from 'react-router-dom'; 
 import './FavoriteScreen.css';
-import Sidebar from '../mainScreen/Sidebar';
-import BellSidebar from '../mainScreen/BellSidebar';
+import Sidebar from '../sidebar/Sidebar';
+import BellSidebar from '../sidebar/BellSidebar';
 
 const MainScreen = () => {
     const [listItems, setListItems] = useState([]);
