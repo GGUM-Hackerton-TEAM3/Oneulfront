@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import { fetchItems, call } from "../../service/ApiService"; 
+import { call } from "../../service/ApiService"; 
 import Sidebar from '../sidebar/Sidebar';
 import BellSidebar from '../sidebar/BellSidebar';
 import './MainScreen.css';
-import { fetchMeetingsByCategory } from '../../service/ApiService'; // Change or keep this line
-
 
 const MainScreen = ({ setCurrentScreen }) => {
     const [listItems, setListItems] = useState([]);
@@ -16,12 +14,7 @@ const MainScreen = ({ setCurrentScreen }) => {
     const [favoriteItems, setFavoriteItems] = useState([]); 
     const navigate = useNavigate(); 
     const [selectedIcon, setSelectedIcon] = useState(null);
-    const [isHeartSidebarOpen, setIsHeartSidebarOpen] = useState(false);
 
-
-    const fetchMeetingsByCategory = async (categoryName) => {
-        return call(`/api/categories/search/meetings?categoryName=${categoryName}`, "GET");
-    };
     const categoryMapping = {
         '영화': 'Movie',
         '공연/예술': 'Performance/Art',
@@ -33,58 +26,61 @@ const MainScreen = ({ setCurrentScreen }) => {
         '게임/오락': 'Game/Entertainment'
     };
 
+    const fetchMeetingsByCategory = async (categoryName) => {
+        return call(`/api/categories/search/meetings?categoryName=${categoryName}`, 'GET');
+    };
+
+    const fetchMeetingsByKeyword = async (keyword) => {
+        return call(`/api/meetings/search?keyword=${keyword}`, 'GET');
+    };
+
     const handleIconClick = async (iconText) => {
         setSelectedIcon(iconText);
-        const backendCategory = categoryMapping[iconText]; 
-    
-        console.log('선택한 카테고리:', backendCategory); // 디버깅
-    
-        if (backendCategory) {
-            try {
-                const response = await fetchMeetingsByCategory(backendCategory); // 전용 함수 사용
-                setListItems(response); 
-            } catch (error) {
-                console.error("카테고리 데이터 가져오기 실패:", error);
+        const backendCategory = categoryMapping[iconText];
+        try {
+            if (backendCategory) {
+                const response = await fetchMeetingsByCategory(backendCategory);
+                setListItems(response);
+            } else {
+                console.error("Invalid category:", iconText);
             }
-        } else {
-            console.error("잘못된 카테고리:", iconText);
+        } catch (error) {
+            console.error("Failed to fetch category data:", error);
         }
     };
-    
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         setLoading(true);
-    //         try {
-    //             const data = await fetchItems(); 
-    //             setListItems(data);
-    //         } catch (error) {
-    //             console.error("Failed to fetch data:", error);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
 
-    //     fetchData();
-    // }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const data = await fetchMeetingsByCategory('all'); 
+                setListItems(data);
+            } catch (error) {
+                console.error("Failed to fetch data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
 
-    const handleSearch = () => {
-        navigate(`/search?query=${searchQuery}`); 
+    const handleSearch = async () => {
+        if (searchQuery.trim() === '') {
+            const data = await fetchMeetingsByCategory('all');
+            setListItems(data);
+        } else {
+            try {
+                const response = await fetchMeetingsByKeyword(searchQuery);
+                setListItems(response);
+            } catch (error) {
+                console.error("검색 실패:", error);
+            }
+        }
     };
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen); 
-    };
-
-   
-
-    const toggleBellSidebar = () => {
-        setIsBellSidebarOpen(!isBellSidebarOpen); 
-    };
-
-    const openSidebar = () => setIsSidebarOpen(true);
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
     const closeSidebar = () => setIsSidebarOpen(false);
-    
-    const openBellSidebar = () => setIsBellSidebarOpen(true);
+    const toggleBellSidebar = () => setIsBellSidebarOpen(!isBellSidebarOpen);
     const closeBellSidebar = () => setIsBellSidebarOpen(false);
 
     const handleHeartClick = (item) => {
@@ -92,7 +88,6 @@ const MainScreen = ({ setCurrentScreen }) => {
             const isFavorite = prev.includes(item.id);
             return isFavorite ? prev.filter(id => id !== item.id) : [...prev, item.id];
         });
-        closeBellSidebar(); // BellSidebar를 닫음
         navigate('/favorite'); 
     };
 
@@ -100,30 +95,27 @@ const MainScreen = ({ setCurrentScreen }) => {
 
     return (
         <div className="main-screen">
-            
             <header className="icon-bar">
                 <button className="icon-img" onClick={toggleSidebar}>
                     <img src="/menu.png" alt="메뉴" />
                 </button>
-
-                <button className="icon-img">
-                    <img src="/heart.png" alt="하트" onClick={handleHeartClick} />
+                <button className="icon-img" onClick={() => navigate('/favorite')}>
+                    <img src="/heart.png" alt="찜한 목록" />
                 </button>
                 <div className="main-search-container">
                     <input
                         type="text1"
                         className="search-input"
-                        placeholder=""
+                        placeholder="검색어를 입력하세요"
                         value={searchQuery}
-                        onClick={handleSearch}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     <button className="search-button" onClick={handleSearch}>
                         <img src="/search.png" alt="검색" />
                     </button>
                 </div>
-                <button className="icon-img" onClick={openBellSidebar}>
-                    <img src="/bell.png" alt="벨" />
+                <button className="icon-img" onClick={toggleBellSidebar}>
+                    <img src="/bell.png" alt="알림" />
                 </button>
             </header>
 
@@ -146,25 +138,25 @@ const MainScreen = ({ setCurrentScreen }) => {
             </div>
 
             <div className="layout-section-main">
-                <h2>이번주의 인기모임을 소개합니다!</h2>
+                <h2>이번 주의 인기 모임을 소개합니다!</h2>
             </div>
 
             <div className="scrollable-list">
                 {listItems.map(item => (
                     <div className="list-item" key={item.id}>
                         <div className="image-container">
-                            <img src={item.image} alt={`이미지 ${item.title}`} className="item-image" />
+                            <img src={item.image || "/default-image.png"} alt={`이미지 ${item.title}`} className="item-image" />
                         </div>
                         <div className="description-frame">
                             <div className="title">
                                 {item.title}
                                 <button className="heart-button" onClick={() => handleHeartClick(item)}>
-                                    <img src="/heart.png" alt="찜하기" />
+                                    <img src={isItemFavorited(item.id) ? "/heart-filled.png" : "/heart.png"} alt="찜하기" />
                                 </button>
                             </div>
                             <div className="icon-row">
-                                {item.icons.map((iconText, index) => (
-                                    <button className="grid-icon" key={index}>{iconText}</button> 
+                                {item.hashtags && item.hashtags.map((hashtag, index) => (
+                                    <button className="grid-icon" key={index}>{hashtag}</button> 
                                 ))}
                             </div>
                             <div className="description">{item.description}</div>
@@ -173,12 +165,7 @@ const MainScreen = ({ setCurrentScreen }) => {
                 ))}
             </div>
             {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />}
-            {isBellSidebarOpen && (
-                <BellSidebar
-                    isOpen={isBellSidebarOpen}
-                    closeBellSidebar={closeBellSidebar} // Ensure the correct function is passed
-                />
-            )}
+            {isBellSidebarOpen && <BellSidebar isOpen={isBellSidebarOpen} closeBellSidebar={closeBellSidebar} />}
         </div>
     );
 };
