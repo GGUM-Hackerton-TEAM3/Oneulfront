@@ -15,6 +15,9 @@ const MainScreen = ({ setCurrentScreen }) => {
     const navigate = useNavigate(); 
     const [selectedIcon, setSelectedIcon] = useState(null);
 
+    const fetchMeetingsByCategory = async (categoryName) => {
+        return call(`/api/categories/search/meetings?category=${categoryName}`, "GET");
+    };
     const categoryMapping = {
         '영화': 'Movie',
         '공연/예술': 'Performance/Art',
@@ -29,19 +32,21 @@ const MainScreen = ({ setCurrentScreen }) => {
     const handleIconClick = async (iconText) => {
         setSelectedIcon(iconText);
         const backendCategory = categoryMapping[iconText]; 
-
-        try {
-            if (backendCategory) {
-                const response = await call(`/api/categories/search/meetings?category=${backendCategory}`, 'GET');
+    
+        console.log('선택한 카테고리:', backendCategory); // 디버깅
+    
+        if (backendCategory) {
+            try {
+                const response = await fetchMeetingsByCategory(backendCategory); // 전용 함수 사용
                 setListItems(response); 
-            } else {
-                console.error("Invalid category:", iconText);
+            } catch (error) {
+                console.error("카테고리 데이터 가져오기 실패:", error);
             }
-        } catch (error) {
-            console.error("Failed to fetch category data:", error);
+        } else {
+            console.error("잘못된 카테고리:", iconText);
         }
     };
-
+    
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);

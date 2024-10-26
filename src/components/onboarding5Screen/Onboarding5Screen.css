@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
+    /* 세로 방향으로 정렬 */
+}
+
+.substance {
+    text-align: left;
+    margin-left: 200pt;
+}
+
+.container {
+    background: rgb(0, 0, 0);
+    padding: 20px;
+    color: #ffffff;
+    height: 150pt;
+    width: 100%
+}
+
+.message {
+
+    text-align: center;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    /* 기본 너비를 90%로 설정 */
+    max-width: 400px;
+    /* 최대 너비 설정 */
+
+}
+
+.title-box h1 {
+    font-size: 28px;
+    /* h1 크기 줄이기 */
+    text-align: center;
+
+}
+
+.title-box {
+    background: white;
+    text-align: center;
+
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    /* 기본 너비를 90%로 설정 */
+    max-width: 400px;
+    /* 최대 너비 설정 */
+
+}
+
+.progress-bar {
+    background-color: #e0e0e0;
+    /* 상태바 배경 색상 */
+    border-radius: 4px;
+    height: 7px;
+    /* 상태바 높이 */
+    margin: 10px 20px;
+    /* 여백 추가 */
+}
+
+.progress {
+    background-color: rgb(57, 164, 94);
+    /* 진행 색상 */
+    height: 100%;
+    /* 상태바 높이에 맞춤 */
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    /* 부드러운 진행 애니메이션 */
+}
+
+.name-email-group {
+    display: flex;
+    /* 가로로 배치 */
+    justify-content: space-between;
+    /* 공간을 고르게 분배 */
+    margin-bottom: 15px;
+    /* 아래쪽 간격 */
+    border-radius: 25px;
+}
+
+.form-group {
+    flex: 1;
+    /* 각 입력 필드가 가득 차도록 설정 */
+    margin-right: 10px;
+    /* 간격 조정 */
+    border-radius: 25px;
+}
+
+.form-group:last-child {
+    margin-right: 0;
+    border-radius: 25px;
+
+    /* 마지막 항목 간격 없애기 */
+}
+
+label {
+    margin-bottom: 5px;
+
+    /* 레이블과 입력 필드 간격 */
+    display: block;
+    /* 레이블을 블록으로 설정 */
+}
+
+input {
+    width: 35%;
+    /* 기본 입력 필드 너비 설정 */
+    padding: 8px;
+    /* 패딩 조정 */
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    text-align: center;
+    margin-left: 200pt;
+    margin-top: 20pt;
+
+}
+
+
+.button-group {
+    display: flex;
+    border-radius: 25px;
+    justify-content: space-between;
+}
+
+.btn {
+    padding: 12px;
+    /* 버튼 패딩 */
+    background-color: rgb(57, 164, 94);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    flex: 1;
+    margin-right: 5px;
+    border-radius: 25px;
+    font-size: 15px;
+    /* 버튼 간격 */
+}
+
+.btn:last-child {
+    margin-right: 0;
+    margin-top: 10px;
+    /* 마지막 버튼 간격 없애기 */
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+#message {
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* 미디어 쿼리 추가 */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+        /* 패딩 줄이기 */
+    }
+
+    input {
+        padding: 6px;
+        /* 입력 필드 패딩 줄이기 */
+    }
+
+    .btn {
+        padding: 6px;
+        /* 버튼 패딩 줄이기 */
+    }
+}

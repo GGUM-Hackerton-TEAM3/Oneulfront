@@ -3,134 +3,75 @@ import axios from 'axios';
 
 const ACCESS_TOKEN = "ACCESS_TOKEN"; // Keep ACCESS_TOKEN declaration
 
+export const call = async (url, method, request = null, isMultipart = false) => {
+    const accessToken = localStorage.getItem(ACCESS_TOKEN); // Get the access token
 
-export function call(api, method, request, isMultipart = false) {
-    let headers = new Headers();
-    
-    if (!isMultipart) {
-        headers.append("Content-Type", "application/json"); // For regular JSON requests
-    }
-    
-    const accessToken = localStorage.getItem(ACCESS_TOKEN);
-    if (accessToken) {
-        headers.append("Authorization", "Bearer " + accessToken);
-    }
-
-    let options = {
-        method: method,
-        headers: headers,
+    const headers = {
+        'Content-Type': isMultipart ? 'multipart/form-data' : 'application/json', // For multipart/form-data or regular JSON requests
+        ...(accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {}), // Add Authorization header only if token exists
     };
-    
-    if (request) {
-        options.body = isMultipart ? request : JSON.stringify(request);
-    }
 
-    return fetch(API_BASE_URL + api, options)
-        .then((response) => {
-            if (!response.ok) {
-                return response.json().then((json) => {
-                    if (response.status === 403) {
-                        window.location.href = "/login";
-                    }
-                    return Promise.reject(json);
-                });
+    const config = {
+        method,
+        url: `${API_BASE_URL}${url}`, // Ensure the API_BASE_URL is prepended to the URL
+        headers,
+        data: request, // Axios uses 'data' instead of 'body'
+    };
+
+    try {
+        const response = await axios(config);
+        // Check if the response status indicates a successful request
+        if (response.status === 200) {
+            return response.data; // Return the data received from the backend
+        } else {
+            // Handle non-200 responses
+            console.error(`Error: Received status ${response.status}`);
+            return Promise.reject(response.data); // Reject with the response data for further handling
+        }
+    } catch (error) {
+        // Handle specific error cases
+        if (error.response) {
+            if (error.response.status === 403) {
+                window.location.href = "/login"; // Redirect to login on forbidden access
             }
-            return response.json();
-        })
-        .catch((error) => {
-            if (error.status === 403) {
-                window.location.href = "/auth/signup"; // 오류 상태에 따른 리다이렉트
-            }
-            console.error("Fetch error:", error); 
-        });
-}
+            console.error("Error response data:", error.response.data);
+            return Promise.reject(error.response.data); // Reject with the error response
+        } else {
+            console.error("Request error:", error.message);
+            return Promise.reject(error.message); // Reject with the error message
+        }
+    }
+};
 
 // 로그인 요청 처리
-export function signin(userDTO) {
-    return call("/auth/signin", "POST", userDTO) // userDTO를 JSON 형식으로 전송
-        .then((response) => {
-            if (response.token) {
-                localStorage.setItem(ACCESS_TOKEN, response.token);
-                window.location.href = "/main"; 
-            }
-        });
-}
+export const signin = async (userDTO) => {
+    const response = await call("/auth/signin", "POST", userDTO); // userDTO를 JSON 형식으로 전송
+    if (response.token) {
+        localStorage.setItem(ACCESS_TOKEN, response.token);
+        window.location.href = "/main"; 
+    }
+};
 
 // 사용자 회원가입 요청 처리
-export function signup(userDTO) {
+export const signup = async (userDTO) => {
     const formData = new FormData(); 
-
     // userDTO의 각 필드를 FormData에 추가
     Object.keys(userDTO).forEach((key) => {
         formData.append(key, userDTO[key]); 
     });
+    const response = await call("/auth/signup", "POST", formData, true); // Use multipart for signup
+    if (response.email) {
+        window.location.href = "/login"; 
+    }
+};
 
-    return call("/auth/signup", "POST", formData, true)
-        .then((response) => {
-            console.log('Signup response:', response); 
-
-            if (response.email) {
-                window.location.href = "/login"; 
-            }
-        })
-        .catch((error) => {
-            console.log("Oops!");
-            console.log(error.status);
-            if (error.status === 403) {
-                window.location.href = "/auth/signup";
-            }
-            return Promise.reject(error);
-        });
-}
-
-
-
-export function signout() {
-    localStorage.removeItem(ACCESS_TOKEN);
-    window.location.href = "/";
-}
-
-
-
-// 백엔드에서 아이템 목록 가져오기(axios를 사용하여 지정된 엔드)
+// 백엔드에서 아이템 목록 가져오기
 export const fetchItems = async () => {
-    try {
-        const response = await axios.get(`${API_BASE_URL}/items`); 
-        return response.data; // Return the data received from the backend
-    } catch (error) {
-        console.error("Error fetching items:", error);
-        throw error; 
-    }
+    const response = await call("/items", "GET"); // Using call to ensure consistent API usage
+    return response; // Return the fetched data
 };
 
-//일반적인 API 호출 처리
-export const apiCall = async (endpoint, method = 'GET', data = null) => {
-    try {
-        const config = {
-            method,
-            url: `${API_BASE_URL}${endpoint}`,
-            data,
-        };
-
-        const response = await axios(config);
-        return response.data; 
-    } catch (error) {
-        console.error(`Error in API call to ${endpoint}:`, error);
-        throw error; 
-    }
-};
-
-
-
-//카테고리 관련 api함수
+// 카테고리 관련 api 함수
 export const fetchMeetingsByCategory = async (categoryName) => {
-    try {
-        const response = await axios.get(`/api/categories/search/meetings`, {
-            params: { category: categoryName }
-        });
-        return response.data;
-    } catch (error) {
-        console.error("Failed to fetch meetings by category:", error);
-        throw error;
-    }
-};
+    return call(`/api/categories/search/meetings?category=${categoryName}`, "GET");
+};  
