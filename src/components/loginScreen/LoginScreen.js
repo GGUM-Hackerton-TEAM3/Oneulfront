@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import './LoginScreen.css';
 
-const LoginScreen = ({onLogin}) => {
+const LoginScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -11,17 +11,14 @@ const LoginScreen = ({onLogin}) => {
     const handleLogin = () => {
         console.log('email:', email);
         console.log('Password:', password);
-        onLogin();
         navigate('/main')
     };
-
 
     const handleJoin = () => {
         navigate('/onboarding')
     };
 
 
-    
     return (
         <div className="login-screen">
           <div className="login-tag" style={{ left: '255px', top: '72px', width: '113px', borderColor: '#83B987' }}>#보드게임</div>

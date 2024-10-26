@@ -31,7 +31,7 @@ const CreateScreen = () => {
     const handleLogin = () => {
         setButtonColor('#1F241E'); 
         setTimeout(() => {
-            navigate('/main');
+            navigate('/groupDetail');
         }, 2000); // Delay of 2 seconds
     };
 

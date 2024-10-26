@@ -10,6 +10,7 @@ import MypageScreen from './components/mypageScreen/MypageScreen';
 import OnboardingScreen from './components/onboardingScreen/OnboardingScreen';
 import OnboardingPwScreen from './components/onboardingPwScreen/OnboardingPwScreen';
 import SearchScreen from './components/searchScreen/SearchScreen';
+import GroupDetailScreen from './components/groupDetailScreen/GroupDetailScreen';
 
 
 const App = () => {
@@ -32,14 +33,15 @@ const App = () => {
         <BrowserRouter> 
             <div>
                 <Routes>
-                    <Route path="/" element={currentScreen === 'logo' ? <LogoScreen /> : <Navigate to="/login" />} />
-                    <Route path="/login" element={currentScreen === 'login' ? <LoginScreen onLogin={handleLogin} /> : <Navigate to="/main" />} />
-                    <Route path="/main" element={currentScreen === 'main' ? <MainScreen setCurrentScreen={setCurrentScreen} /> : <Navigate to="/login" />} />
+                    <Route path="/" element={<LogoScreen />} />          
+                    <Route path="/login" element={<LoginScreen />} />          
+                    <Route path="/main" element={<MainScreen />} />          
                     <Route path="/chat" element={<ChatScreen />} />
                     <Route path="/create" element={<CreateScreen />} />
                     <Route path="/favorite" element={<FavoriteScreen />} />
                     <Route path="/onboarding" element={<OnboardingScreen />} />
                     <Route path="/onboardingPw" element={<OnboardingPwScreen />} />
+                    <Route path="/groupDetail" element={<GroupDetailScreen />} />
                     <Route path="/mypage" element={<MypageScreen />} />
                     <Route path="/search" element={<SearchScreen />} />
                     <Route path="*" element={<Navigate to="/" />} />

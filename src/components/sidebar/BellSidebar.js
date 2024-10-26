@@ -3,6 +3,8 @@ import './BellSidebar.css';
 import { useNavigate } from 'react-router-dom';
 
 const BellSidebar = ({ isOpen, closeBellSidebar }) => {
+
+    const navigate = useNavigate();
     const [meetings, setMeetings] = useState([]);
     const [isChatActive, setIsChatActive] = useState(false);
     const [isAlertActive, setIsAlertActive] = useState(false);
@@ -32,6 +34,12 @@ const BellSidebar = ({ isOpen, closeBellSidebar }) => {
         setIsAlertActive(true);
         setIsChatActive(false);
     };
+    const closeBell = () => {
+        closeBellSidebar(); // Ensure this function is passed correctly
+        navigate('/main');
+    };
+
+
 
     return (
         <div className={`bellsidebar ${isOpen ? 'open' : ''}`}>
@@ -73,8 +81,9 @@ const BellSidebar = ({ isOpen, closeBellSidebar }) => {
             <div className="bellsidebar-3">
                 <button
                     className={`bellsidebar-3-btn`}
-                    onClick={closeBellSidebar}>   닫기
+                    onClick={closeBell}>   닫기
                 </button>
+            
             </div>
         </div>
     );

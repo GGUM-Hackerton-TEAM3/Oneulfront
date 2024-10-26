@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import { call } from "../../service/ApiService";
+import { fetchItems, call } from "../../service/ApiService"; 
 import Sidebar from '../sidebar/Sidebar';
 import BellSidebar from '../sidebar/BellSidebar';
 import './MainScreen.css';
-
-
 
 const MainScreen = ({ setCurrentScreen }) => {
     const [listItems, setListItems] = useState([]);
@@ -13,15 +11,42 @@ const MainScreen = ({ setCurrentScreen }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [loading, setLoading] = useState(true); 
     const [isBellSidebarOpen, setIsBellSidebarOpen] = useState(false);
-    const [favoriteItems, setFavoriteItems] = useState([]); // 찜한 아이템 저장
+    const [favoriteItems, setFavoriteItems] = useState([]); 
     const navigate = useNavigate(); 
+    const [selectedIcon, setSelectedIcon] = useState(null);
 
-    // 백엔드에서 데이터를 가져오는 함수
+    const categoryMapping = {
+        '영화': 'Movie',
+        '공연/예술': 'Performance/Art',
+        '운동': 'Exercise',
+        '음식': 'Food',
+        '자기계발': 'Self-Development',
+        '사진/영상': 'Photography/Video',
+        '책/글': 'Book/Writing',
+        '게임/오락': 'Game/Entertainment'
+    };
+
+    const handleIconClick = async (iconText) => {
+        setSelectedIcon(iconText);
+        const backendCategory = categoryMapping[iconText]; 
+
+        try {
+            if (backendCategory) {
+                const response = await call(`/api/categories/search/meetings?category=${backendCategory}`, 'GET');
+                setListItems(response); 
+            } else {
+                console.error("Invalid category:", iconText);
+            }
+        } catch (error) {
+            console.error("Failed to fetch category data:", error);
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const data = await call('/your-endpoint', 'GET'); // Replace with your actual endpoint
+                const data = await fetchItems(); 
                 setListItems(data);
             } catch (error) {
                 console.error("Failed to fetch data:", error);
@@ -40,6 +65,7 @@ const MainScreen = ({ setCurrentScreen }) => {
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen); 
     };
+
     const closeSidebar = () => {
         setIsSidebarOpen(false); 
     };
@@ -47,27 +73,20 @@ const MainScreen = ({ setCurrentScreen }) => {
     const toggleBellSidebar = () => {
         setIsBellSidebarOpen(!isBellSidebarOpen); 
     };
+
     const closeBellSidebar = () => {
         setIsBellSidebarOpen(false); 
     };
 
-
-   
-
-     // 이미 찜한 경우에는 삭제, 아닌 경우에는 추가
     const handleHeartClick = (item) => {
         setFavoriteItems(prev => {
             const isFavorite = prev.includes(item.id);
-            if (isFavorite) {
-                return prev.filter(id => id !== item.id); 
-            } else {
-                return [...prev, item.id];
-            }
+            return isFavorite ? prev.filter(id => id !== item.id) : [...prev, item.id];
         });
         navigate('/favorite'); 
     };
-        const isItemFavorited = (id) => favoriteItems.includes(id); // 해당 아이템이 찜 목록에 있는지 확
 
+    const isItemFavorited = (id) => favoriteItems.includes(id); 
 
     return (
         <div className="main-screen">
@@ -75,7 +94,6 @@ const MainScreen = ({ setCurrentScreen }) => {
                 <button className="icon-img" onClick={toggleSidebar}>
                     <img src="/menu.png" alt="메뉴" />
                 </button>
-                <Sidebar isOpen={isSidebarOpen} closeBellSidebar={closeSidebar} />
 
                 <button className="icon-img">
                     <img src="/heart.png" alt="하트" onClick={handleHeartClick} />
@@ -96,19 +114,23 @@ const MainScreen = ({ setCurrentScreen }) => {
                 <button className="icon-img" onClick={toggleBellSidebar}>
                     <img src="/bell.png" alt="벨" />
                 </button>
-
             </header>
 
             <div className="frame">
                 <div className="icon-grid">
-                    <button className="icon">영화</button>
-                    <button className="icon">공연/예술</button>
-                    <button className="icon">운동</button>
-                    <button className="icon">사진/영상</button>
-                    <button className="icon">음식</button>
-                    <button className="icon">게임/오락</button>
-                    <button className="icon">자기계발</button>
-                    <button className="icon">책/글</button>
+                    {Object.keys(categoryMapping).map((iconText, index) => (
+                        <button
+                            key={index}
+                            className="icon"
+                            onClick={() => handleIconClick(iconText)}
+                            style={{
+                                backgroundColor: selectedIcon === iconText ? '#93C296' : 'transparent',
+                                color: selectedIcon === iconText ? 'white' : 'black'
+                            }} 
+                        >
+                            {iconText}
+                        </button>
+                    ))}
                 </div>
             </div>
 
@@ -140,7 +162,7 @@ const MainScreen = ({ setCurrentScreen }) => {
                 ))}
             </div>
             {isSidebarOpen && <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />}
-            {isBellSidebarOpen && <BellSidebar isOpen={isBellSidebarOpen} closeSidebar={closeBellSidebar} />}
+            {isBellSidebarOpen && <BellSidebar isOpen={isBellSidebarOpen} closeBellSidebar={closeBellSidebar} />}
         </div>
     );
 };

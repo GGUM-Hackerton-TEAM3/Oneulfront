@@ -13,13 +13,14 @@ function OnboardingScreen() {
     event.preventDefault();
     const validCode = "123456"; // 실제로는 서버에서 발급받아야 함
 
-   if (code === validCode) {
+    if (code === validCode) {
       setMessage(`인증 성공! ${name}님 환영합니다.`);
       setTimeout(() => {
         navigate('/onboardingPw'); 
-    }, 8000); 
-      setMessage('인증 실패. 인증번호를 확인하세요.');
-  };
+      }, 8000); 
+    } else {
+      setMessage('인증 실패. 인증번호를 확인하세요.'); // 이 부분을 else 블록으로 이동
+    }
   };
 
   return (
