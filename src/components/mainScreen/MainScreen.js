@@ -181,7 +181,7 @@ const MainScreen = ({ setCurrentScreen }) => {
                 </button>
                 <div className="main-search-container">
                     <input
-                        type="text-search"
+                        type="text"
                         className="search-input"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
