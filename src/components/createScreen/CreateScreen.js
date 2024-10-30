@@ -73,7 +73,7 @@ const CreateScreen = () => {
 
     const handleProfileImageClick = () => {
         setTempProfileImage(prevImage => 
-            prevImage === '/soccerking.png' ? '/bakeit.png' : '/soccerking.png'
+            prevImage === '/soccerking.png' ? '/drawing.png' : '/soccerking.png'
         );
     };
      useEffect(() => {
@@ -135,21 +135,22 @@ const CreateScreen = () => {
                     <img src="/soccerking.png" alt="Example" className="layout2-image" />
                 </div>
                 <div className="layout2-right">
+                     <p>현재 프로필</p>
                     <input
                         type="text"
                         value={userName} 
-                        placeholder="유저네임"
+                        placeholder="축구왕헤르"
                         className="layout2-right-username"
                         readOnly 
                     />
                     <div className="icon-grid">
-                        <button className="icon">아이콘 1</button>
-                        <button className="icon">아이콘 2</button>
+                        <button className="icon">23살</button>
+                        <button className="icon">경영학과</button>
                     </div>
                     <input
                         type="text"
                         value={userDescription} 
-                        placeholder="사용자 설명"
+                        placeholder="축구가 좋아요!"
                         className="layout2-right-description"
                         readOnly
                     />

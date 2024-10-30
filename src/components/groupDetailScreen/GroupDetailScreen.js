@@ -33,7 +33,7 @@ const GroupDetailScreen = () => {
       setLocation(data.location); // 데이터 삽입
     } catch (error) {
       console.error('Error fetching location:', error);
-      setLocation('장소 정보 불러오기 실패');
+      setLocation('장소 정보');
     }
   };
 
@@ -110,6 +110,9 @@ const handleIconClick = async (iconText) => {
 };
 
   return (
+    <div className='GroupDetailScreen'>
+
+
     <div className="scrollable-list">
     <div>
          <header className="icon-bar">
@@ -182,12 +185,7 @@ const handleIconClick = async (iconText) => {
         >
           홈
         </button>
-        <button
-          className={`nav-btn ${activeButton === 'board' ? 'active' : ''}`}
-          onClick={() => handleButtonClick('board')}
-        >
-          게시판
-        </button>
+  
         <button
           className={`nav-btn ${activeButton === 'members' ? 'active' : ''}`}
           onClick={() => handleButtonClick('members')}
@@ -196,7 +194,7 @@ const handleIconClick = async (iconText) => {
         </button>
       </div>
 
-      <div className="message22" id="message">
+      <div className="message33" id="message">
         <img
           src= "/drawing.png"
           alt="멍충거위"
@@ -206,7 +204,6 @@ const handleIconClick = async (iconText) => {
         <p>귀여운 드로잉해요.</p>
         <button className="option">24살</button>
         <button className="option">남자</button>
-        <button className="option">바메솦</button>
         <p className="comment">잉~ 똥손도 가능~</p>
 
         <div className="map-container">
@@ -228,13 +225,14 @@ const handleIconClick = async (iconText) => {
         </button>
 
         <div className="containers">
-          <span className="group-tag">모임 관련 태그</span>
+          <span className="group-tag2">모임 관련 태그</span>
           <div className="rounded-rectangle">#드로잉</div>
           <div className="rounded-rectangle">#부천시</div>
         </div>
       </div>
     </div></div>
+    </div>
   );
 };
-
+    
 export default GroupDetailScreen;

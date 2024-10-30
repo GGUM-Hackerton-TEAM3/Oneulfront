@@ -6,15 +6,88 @@ import BellSidebar from '../sidebar/BellSidebar';
 import './MainScreen.css';
 
 const MainScreen = ({ setCurrentScreen }) => {
-    const [listItems, setListItems] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState(''); // Define searchQuery state
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [loading, setLoading] = useState(true); 
     const [isBellSidebarOpen, setIsBellSidebarOpen] = useState(false);
     const [favoriteItems, setFavoriteItems] = useState([]); 
+    const [listItems, setListItems] = useState([]); // Define listItems state
     const navigate = useNavigate(); 
     const [selectedIcon, setSelectedIcon] = useState(null);
 
+    const listItems2 = [
+        {
+            id: 1,
+            image: '/bucheon.png', // 이미지 경로
+            title: '부천시 명상해용',
+            icons: ['자기계발', '영상'], 
+            description: '모여서 명상해요'
+        },
+        {
+            id: 2,
+            image: '/bakeit.png', 
+            title: '쿠키베이킷(Bake it)',
+            icons: ['음식', '베이킹'], 
+            description: '함께 구움과자를 구워요'
+        },
+        {
+            id: 3,
+            image: '/drawing.png', 
+            title: '귀여운 드로ing해요',
+            icons: ['공연/예술', '드로잉'], 
+            description: '잉~똥손도 가능~'
+        },
+        {
+            id: 4,
+            image: '/cinema.png', 
+            title: '씨네모아',
+            icons: ['영화', '부천시'],
+            description: '대관해서도 봐요!'
+        },
+        {
+            id: 5,
+            image: '/sport.png', 
+            title: '룰루랄라풋볼 고고',
+            icons: ['운동', '3040'],
+            description: '뭐해 당장 일어나서 운동가야지'
+        },
+        {
+            id: 1,
+            image: '/bucheon.png', 
+            title: '부천시 명상해용',
+            icons: ['자기계발', '영상'], 
+            description: '모여서 명상해요'
+        },
+        {
+            id: 2,
+            image: '/bakeit.png', 
+            title: '쿠키베이킷(Bake it)',
+            icons: ['음식', '베이킹'], 
+            description: '함께 구움과자를 구워요'
+        },
+        {
+            id: 3,
+            image: '/drawing.png', 
+            title: '귀여운 드로ing해요',
+            icons: ['공연/예술', '드로잉'], 
+            description: '잉~똥손도 가능~'
+        },
+        {
+            id: 4,
+            image: '/cinema.png', 
+            title: '씨네모아',
+            icons: ['영화', '부천시'],
+            description: '대관해서도 봐요!'
+        },
+        {
+            id: 5,
+            image: '/sport.png', 
+            title: '룰루랄라풋볼 고고',
+            icons: ['운동', '3040'],
+            description: '뭐해 당장 일어나서 운동가야지'
+        }
+    ];
+    // Your existing listItems data
     const categoryMapping = {
         '영화': 'Movie',
         '공연/예술': 'Performance/Art',
@@ -40,7 +113,7 @@ const MainScreen = ({ setCurrentScreen }) => {
         try {
             if (backendCategory) {
                 const response = await fetchMeetingsByCategory(backendCategory);
-                setListItems(response);
+                setListItems(response); // Use setListItems to update state
             } else {
                 console.error("Invalid category:", iconText);
             }
@@ -67,19 +140,22 @@ const MainScreen = ({ setCurrentScreen }) => {
     const handleSearch = async () => {
         if (searchQuery.trim() === '') {
             const data = await fetchMeetingsByCategory('all');
-            setListItems(data);
+            setListItems(data); 
         } else {
             try {
                 const response = await fetchMeetingsByKeyword(searchQuery);
-                setListItems(response);
+                setListItems(response); 
             } catch (error) {
                 console.error("검색 실패:", error);
             }
         }
     };
 
+    const openSidebar = () => { 
+        setIsSidebarOpen(true); 
+        setIsBellSidebarOpen(false); 
+    };
 
-    const openSidebar = () => setIsSidebarOpen(true);
     const closeSidebar = () => setIsSidebarOpen(false);
     const toggleBellSidebar = () => setIsBellSidebarOpen(!isBellSidebarOpen);
     const closeBellSidebar = () => setIsBellSidebarOpen(false);
@@ -105,9 +181,8 @@ const MainScreen = ({ setCurrentScreen }) => {
                 </button>
                 <div className="main-search-container">
                     <input
-                        type="text1"
+                        type="text-search"
                         className="search-input"
-                        placeholder="검색어를 입력하세요"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -119,8 +194,8 @@ const MainScreen = ({ setCurrentScreen }) => {
                     <img src="/bell.png" alt="알림" />
                 </button>
                 {isBellSidebarOpen && (
-           <BellSidebar isOpen={isBellSidebarOpen} closeBellSidebar={closeBellSidebar} />
-           )}
+                    <BellSidebar isOpen={isBellSidebarOpen} closeBellSidebar={closeBellSidebar} />
+                )}
             </header>
 
             <div className="frame">
@@ -145,22 +220,18 @@ const MainScreen = ({ setCurrentScreen }) => {
                 <h2>이번 주의 인기 모임을 소개합니다!</h2>
             </div>
 
+
             <div className="scrollable-list">
-                {listItems.map(item => (
+                {listItems2.map(item => (
                     <div className="list-item" key={item.id}>
                         <div className="image-container">
-                            <img src={item.image || "/default-image.png"} alt={`이미지 ${item.title}`} className="item-image" />
+                            <img src={item.image} alt={`이미지 ${item.title}`} className="item-image" />
                         </div>
                         <div className="description-frame">
-                            <div className="title">
-                                {item.title}
-                                <button className="heart-button" onClick={() => handleHeartClick(item)}>
-                                    <img src={isItemFavorited(item.id) ? "/heart-filled.png" : "/heart.png"} alt="찜하기" />
-                                </button>
-                            </div>
+                            <div className="title">{item.title}</div>
                             <div className="icon-row">
-                                {item.hashtags && item.hashtags.map((hashtag, index) => (
-                                    <button className="grid-icon" key={index}>{hashtag}</button> 
+                                {item.icons.map((iconText, index) => (
+                                    <button className="grid-icon" key={index}>{iconText}</button> 
                                 ))}
                             </div>
                             <div className="description">{item.description}</div>

@@ -113,7 +113,7 @@
   justify-content: center; 
   align-items: center; 
   width: 380px; 
-  height: 140px;
+  height: 160px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   margin-bottom: 10px; 
@@ -141,7 +141,9 @@
   flex-direction: column; 
   justify-content: center; 
 }
-
+.layout2m-right p{
+  font-size: 12px;
+}
 
 .mypage-layout3 {
   display: flex; 

@@ -11,9 +11,11 @@ const MypageScreen = () => {
     const [isBellSidebarOpen, setIsBellSidebarOpen] = useState(false);
     const [profileImage, setProfileImage] = useState('/soccerking.png');
     const [tempProfileImage, setTempProfileImage] = useState('/soccerking.png'); 
-    const [favoriteItems, setFavoriteItems] = useState([]); // 찜한 아이템 저장
-    const [userName, setUserName] = useState('');
-    const [userDescription, setUserDescription] = useState('');
+    const [favoriteItems, setFavoriteItems] = useState([]);
+    const [userName, setUserName] = useState(''); 
+    const [userDescription, setUserDescription] = useState(''); 
+    const [nicknameInput, setNicknameInput] = useState('');
+    const [statusMessageInput, setStatusMessageInput] = useState('');
     const [buttonColor, setButtonColor] = useState('#C3C5CB'); 
 
     const handleRewrite = () => {
@@ -22,6 +24,8 @@ const MypageScreen = () => {
         setTimeout(() => {
             setButtonColor('#C3C5CB');
         }, 2000); 
+        setUserName(nicknameInput);
+        setUserDescription(statusMessageInput);
     };
 
     const handleLogout = () => {
@@ -53,6 +57,7 @@ const MypageScreen = () => {
             prevImage === '/soccerking.png' ? '/bakeit.png' : '/soccerking.png'
         );
     };
+
     const handleHeartClick = (item) => {
         setFavoriteItems(prev => {
             const isFavorite = prev.includes(item.id);
@@ -64,38 +69,42 @@ const MypageScreen = () => {
         });
         navigate('/favorite'); 
     };
-        const isItemFavorited = (id) => favoriteItems.includes(id); // 해당 아이템이 찜 목록에 있는지 확
 
+    const isItemFavorited = (id) => favoriteItems.includes(id); 
+
+    const handleNicknameChange = (e) => setNicknameInput(e.target.value);
+    const handleStatusMessageChange = (e) => setStatusMessageInput(e.target.value);
+
+   
 
     return (
         <div className="create-screenm">
             <div className="scroll-container">    
-            <header className="icon-bar">
-                <button className="icon-img" onClick={toggleSidebar}>
-                    <img src="/menu.png" alt="메뉴" />
-                </button>
-                <button className="icon-img">
-                    <img src="/heart.png" alt="하트" onClick={handleHeartClick} />
-                </button>
-                <div className="main-search-container">
-                    <input
-                        type="text1"
-                        className="search-input"
-                        placeholder=""
-                        value={searchQuery}
-                        onClick={handleSearch}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    <button className="search-button" onClick={handleSearch}>
-                        <img src="/search.png" alt="검색" />
+                <header className="icon-bar">
+                    <button className="icon-img" onClick={toggleSidebar}>
+                        <img src="/menu.png" alt="메뉴" />
                     </button>
-                </div>
-                <button className="icon-img" onClick={toggleBellSidebar}>
-                    <img src="/bell.png" alt="벨" />
-                </button>
-            </header>
+                    <button className="icon-img">
+                        <img src="/heart.png" alt="하트" onClick={handleHeartClick} />
+                    </button>
+                    <div className="main-search-container">
+                        <input
+                            type="text1"
+                            className="search-input"
+                            placeholder=""
+                            value={searchQuery}
+                            onClick={handleSearch}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                        <button className="search-button" onClick={handleSearch}>
+                            <img src="/search.png" alt="검색" />
+                        </button>
+                    </div>
+                    <button className="icon-img" onClick={toggleBellSidebar}>
+                        <img src="/bell.png" alt="벨" />
+                    </button>
+                </header>
 
-        
                 <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} />
                 <BellSidebar isOpen={isBellSidebarOpen} closeSidebar={closeBellSidebar} />
 
@@ -108,21 +117,22 @@ const MypageScreen = () => {
                         <img src={profileImage} alt="Profile" className="layout2m-image" /> 
                     </div>
                     <div className="layout2m-right">
+                        <p>현재 프로필</p>
                         <input
                             type="text"
                             value={userName} 
-                            placeholder="유저네임"
+                            placeholder="축구왕헤르"
                             className="layout2m-right-username"
                             readOnly 
                         />
                         <div className="icon-grid">
-                            <button className="icon">아이콘 1</button>
-                            <button className="icon">아이콘 2</button>
+                            <button className="icon">23살</button>
+                            <button className="icon">경영학과</button>
                         </div>
                         <input
                             type="text"
                             value={userDescription} 
-                            placeholder="사용자 설명"
+                            placeholder="축구가 좋아요!"
                             className="layout2m-right-description"
                             readOnly
                         />
@@ -134,6 +144,8 @@ const MypageScreen = () => {
                         <h3>닉네임 </h3>
                         <input
                             type="text"
+                            value={nicknameInput}
+                            onChange={handleNicknameChange}
                             className="mypage-layout3-input"
                         />
                     </div>
@@ -141,6 +153,8 @@ const MypageScreen = () => {
                         <h3>상태메시지 </h3>
                         <input
                             type="text"
+                            value={statusMessageInput}
+                            onChange={handleStatusMessageChange}
                             className="mypage-layout3-input"
                         />
                     </div>
@@ -167,6 +181,6 @@ const MypageScreen = () => {
             </div>
         </div>
     );
-}
+};
 
 export default MypageScreen;

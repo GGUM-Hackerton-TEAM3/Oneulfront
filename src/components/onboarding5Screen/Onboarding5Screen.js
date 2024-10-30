@@ -40,4 +40,4 @@ return (
 );
 };
 
-export default FinalStep;
+export default Onboarding5Screen;

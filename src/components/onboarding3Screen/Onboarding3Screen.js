@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import './styles.css';
+import './Onboarding3Screen.css';
+import { useNavigate } from 'react-router-dom';
 
-const Onboarding = () => {
+
+const Onboarding3Screen = () => {
+const navigate = useNavigate(); 
+
 const [nickname, setNickname] = useState('');
 const [message, setMessage] = useState('');
 const handleSubmit = (e) => {
@@ -51,4 +55,4 @@ return (
 );
 };
 
-export default Onboarding;
+export default Onboarding3Screen;

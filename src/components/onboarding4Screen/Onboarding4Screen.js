@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import './styles.css'; // Ensure you have this CSS file
+import { useNavigate } from 'react-router-dom'; 
+import './Onboarding4Screen.css'; // Ensure you have this CSS file
 
-const Onboarding = () => {
+const Onboarding4Screen = () => {
+const navigate = useNavigate(); 
+
 const [name, setName] = useState('');
 const [school, setSchool] = useState('');
 const [major, setMajor] = useState('');
@@ -105,4 +108,4 @@ return (
 );
 };
 
-export default Onboarding;
+export default Onboarding4Screen;

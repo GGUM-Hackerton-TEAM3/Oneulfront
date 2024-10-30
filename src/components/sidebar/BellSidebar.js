@@ -47,9 +47,10 @@ const BellSidebar = ({ isOpen, closeBellSidebar }) => {
                 <ul>
 
                 <li className="meeting-item">
-                        <img src="https://via.placeholder.com/50" alt="Meeting" className="meeting-image" /> {/* Replace with your image URL */}
+                        <img src="/drawing.png" alt="Meeting" className="meeting-image" /> {/* Replace with your image URL */}
                         <div className="meeting-details">
-                            <h4 className="meeting-title">쿠키 베이킷!(Bake it!)</h4> {/* Replace with your title */}
+                            <h4 className="meeting-title">멍충거위</h4> {/* Replace with your title */}
+                            <p className='meeting-p'>귀여운 드로잉해요</p>
                         </div>
                     </li>
 
